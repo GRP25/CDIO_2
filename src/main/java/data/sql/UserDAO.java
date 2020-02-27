@@ -1,11 +1,15 @@
 package data.sql;
 
+import data.IUserDAO;
+import data.UserDTO;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 import static data.sql.Ctrl.connect;
 
-public class UserDAO{
-    public void createUser(String userName, String ini, int cpr, String password, int groupID) {
+public class UserDAO implements IUserDAO {
+    public void createUser(String userName, String ini, int cpr, String password, ArrayList<Integer> rolesID) {
         /**
          * Create a user in the database
          * @param userName
@@ -14,21 +18,41 @@ public class UserDAO{
          * @param password
          * @param groupID
          */
-        String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password,group_id) VALUES(?,?,?,?,?)";
+        String createUser = "INSERT INTO user (user_name,user_init,user_cpr,user_password) VALUES(?,?,?,?)";
+        String getUserID = "SELECT MAX(user_id) FROM user";
+        String createRelationship = "INSERT INTO has_role (user_id,group_id)";
 
+        //First insert new user in userTable
         try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(createUser)) {
             pstmt.setString(1, userName);
             pstmt.setString(2,ini);
             pstmt.setInt(3,cpr);
             pstmt.setString(4,password);
-            pstmt.setInt(5,groupID);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        //Next get new users ID and insert new users relations in relation table
+        //TODO JEG VED IKKE OM DET HER VIRKER!!
+        try (Connection conn = connect();
+        PreparedStatement pstmt1 = conn.prepareStatement(getUserID);
+        PreparedStatement pstmt2 = conn.prepareStatement(createRelationship)) {
+            ResultSet rs    = pstmt1.executeQuery();
+            int userID = rs.getInt("user_id");
+
+            for(int roleID : rolesID){
+                pstmt2.setInt(0,userID);
+                pstmt2.setInt(1,roleID);
+                pstmt2.executeUpdate();
+            }
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
-    public Object[][] selectAllUsers(){
+    public ArrayList<UserDTO> getUserList(){
         /**
          * Select all rows in the user table
          */
@@ -36,39 +60,57 @@ public class UserDAO{
                 "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password, usergroup.group_title " +
                         "FROM user " +
                         "INNER JOIN usergroup ON usergroup.group_id=user.group_id";
-        Object[][] users = null;
+        String getUserGroups = "SELECT group_id FROM has_role WHERE user_id = ?";
+        ArrayList<UserDTO> users = null;
         try (Connection conn = connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             // loop through the result set
-            int cols = rs.getMetaData().getColumnCount();
-            //int rows = 0;
-            // (rs.next())
-            //    rows++;
-            users = new Object[100][cols];
-            int col = 0;
+            ArrayList<Integer> group_ids = null;
+            UserDTO user                 = null;
             while (rs.next()) {
-                users[col][0] = rs.getInt("user_id");
-                users[col][1] = rs.getString("user_name");
-                users[col][2] = rs.getString("user_init");
-                users[col][3] = rs.getInt("user_cpr");
-                users[col][4] = rs.getString("user_password");
-                users[col][5] = rs.getString("group_title");
-                col++;
+                group_ids.clear();
+                user.setId(rs.getInt("user_id"));
+                user.setName(rs.getString("user_name"));
+                user.setInitials(rs.getString("user_init"));
+                user.setCpr(rs.getInt("user_cpr"));
+                user.setPassword(rs.getString("user_password"));
+                user.setRoles(getUserRoles(rs.getInt("user_id")));
+                users.add(user);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return users;
     }
-    public Object[] selectUser(int ID){
+    private ArrayList<Integer> getUserRoles(int userID){
+        String getUserGroups = "SELECT group_id FROM has_role WHERE user_id = ?";
+
+        ArrayList<Integer> userRoles = null;
+        try (Connection conn = connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(getUserGroups)) {
+
+            // loop through the result set
+            ArrayList<Integer> group_ids = null;
+            UserDTO            user      = null;
+            while (rs.next()) {
+                group_ids.add(rs.getInt("group_id"));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return userRoles;
+    }
+
+    public UserDTO getUser(int ID){
         /**
          * Will return an array containing all entities for user with the given id.
          * @param ID
          * @return
          */
-        Object[] user = new Object[6];
+        UserDTO user = null;
         String sql =
                 "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password, usergroup.group_title " +
                         "FROM user " +
@@ -81,12 +123,12 @@ public class UserDAO{
         ) {
             pstmt.setInt(1,ID);
             ResultSet rs    = pstmt.executeQuery();
-            user[0] = rs.getInt("user_id");
-            user[1] = rs.getString("user_name");
-            user[2] = rs.getString("user_init");
-            user[3] = rs.getInt("user_cpr");
-            user[4] = rs.getString("user_password");
-            user[5] = rs.getString("group_title");
+            user.setId(rs.getInt("user_id"));
+            user.setName(rs.getString("user_name"));
+            user.setInitials(rs.getString("user_init"));
+            user.setCpr(rs.getInt("user_cpr"));
+            user.setPassword(rs.getString("user_password"));
+            user.setRoles(getUserRoles(rs.getInt("user_id")));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

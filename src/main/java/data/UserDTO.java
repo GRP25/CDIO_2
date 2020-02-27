@@ -1,19 +1,25 @@
 package data;
 
-import java.util.List;
+import java.util.ArrayList;
 
-<<<<<<< HEAD
+public class UserDTO {
+    private String       name;
 
-=======
->>>>>>> origin/userDTO
-public class UserDTO{
-    String name;
-    String password;
-    List<String> roles;
-    int id;
-    int cpr;
+    public String getInitials() {
+        return initials;
+    }
 
-    public UserDTO(String name, String password, List<String> roles, int id, int cpr) {
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
+
+    private String    initials;
+    private String    password;
+    private ArrayList<Integer> roles;
+    private int          id;
+    private int          cpr;
+
+    public UserDTO(String name, String password, ArrayList<Integer> roles, int id, int cpr) {
         this.name = name;
         this.password = password;
         this.roles = roles;
@@ -29,7 +35,7 @@ public class UserDTO{
         return password;
     }
 
-    public List<String> getRoles() {
+    public ArrayList<Integer> getRoles() {
         return roles;
     }
 
@@ -49,7 +55,7 @@ public class UserDTO{
         this.password = password;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(ArrayList<Integer> roles) {
         this.roles = roles;
     }
 
@@ -60,8 +66,4 @@ public class UserDTO{
     public void setCpr(int cpr) {
         this.cpr = cpr;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/userDTO
