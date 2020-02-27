@@ -9,6 +9,38 @@ import java.util.ArrayList;
 import static data.sql.Ctrl.connect;
 
 public class UserDAO implements IUserDAO {
+    private ArrayList<String> getUserRoles(int userID){
+        String getUserGroupsID = "SELECT group_id FROM has_role WHERE user_id = ?";
+        String getUserGroups = "SELECT group_title FROM group WHERE group_id = ?";
+        ArrayList<Integer> userRolesID = null;
+        ArrayList<String> userRoles = null;
+
+        try (Connection conn = connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(getUserGroupsID)) {
+
+            while (rs.next()) {
+                userRolesID.add(rs.getInt("group_id"));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        try (Connection conn = connect();
+             Statement stmt  = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(getUserGroups)) {
+
+            for (int id : userRolesID) {
+                pstmt.setInt(1,id);
+                ResultSet rs    = pstmt.executeQuery();
+                userRoles.add(rs.getString("group_title"));
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return userRoles;
+    }
+
     public void createUser(String userName, String ini, int cpr, String password, ArrayList<Integer> rolesID) {
         /**
          * Create a user in the database
@@ -35,7 +67,6 @@ public class UserDAO implements IUserDAO {
         }
 
         //Next get new users ID and insert new users relations in relation table
-        //TODO JEG VED IKKE OM DET HER VIRKER!!
         try (Connection conn = connect();
         PreparedStatement pstmt1 = conn.prepareStatement(getUserID);
         PreparedStatement pstmt2 = conn.prepareStatement(createRelationship)) {
@@ -56,11 +87,9 @@ public class UserDAO implements IUserDAO {
         /**
          * Select all rows in the user table
          */
-        String sql =
-                "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password, usergroup.group_title " +
-                        "FROM user " +
-                        "INNER JOIN usergroup ON usergroup.group_id=user.group_id";
-        String getUserGroups = "SELECT group_id FROM has_role WHERE user_id = ?";
+        String sql = "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password, usergroup.group_title " +
+                "FROM user " +
+                "INNER JOIN usergroup ON usergroup.group_id=user.group_id";
         ArrayList<UserDTO> users = null;
         try (Connection conn = connect();
              Statement stmt  = conn.createStatement();
@@ -84,26 +113,6 @@ public class UserDAO implements IUserDAO {
         }
         return users;
     }
-    private ArrayList<Integer> getUserRoles(int userID){
-        String getUserGroups = "SELECT group_id FROM has_role WHERE user_id = ?";
-
-        ArrayList<Integer> userRoles = null;
-        try (Connection conn = connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(getUserGroups)) {
-
-            // loop through the result set
-            ArrayList<Integer> group_ids = null;
-            UserDTO            user      = null;
-            while (rs.next()) {
-                group_ids.add(rs.getInt("group_id"));
-            }
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-        return userRoles;
-    }
-
     public UserDTO getUser(int ID){
         /**
          * Will return an array containing all entities for user with the given id.
@@ -112,9 +121,8 @@ public class UserDAO implements IUserDAO {
          */
         UserDTO user = null;
         String sql =
-                "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password, usergroup.group_title " +
+                "SELECT user.user_id, user.user_name, user.user_init, user.user_cpr, user.user_password " +
                         "FROM user " +
-                        "INNER JOIN usergroup ON usergroup.group_id=user.group_id " +
                         "WHERE user.user_id = ?;";
 
         try (
@@ -134,22 +142,7 @@ public class UserDAO implements IUserDAO {
         }
         return user;
     }
-    public int getUserGroupID(int userID){
-        int id = 0;
-        String SQL = "SELECT group_id FROM user WHERE user_id = ?";
-        try (
-                Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(SQL)
-        ) {
-            pstmt.setInt(1,userID);
-            ResultSet rs    = pstmt.executeQuery();
-            id = rs.getInt(1);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return id;
-    }
-    public void updateUser(int id, String userName, String ini, int cpr, String password, int groupID) {
+    public void updateUser(int id, String userName, String ini, int cpr, String password, ArrayList<Integer> rolesID) {
         /**
          * Update user with ID
          * @param id
@@ -157,13 +150,11 @@ public class UserDAO implements IUserDAO {
          * @param ini
          * @param cpr
          * @param password
-         * @param groupID
          */
         String sql = "UPDATE user SET user_name = ? , "
                 + "user_init = ? , "
                 + "user_cpr = ? , "
                 + "user_password = ? , "
-                + "group_id = ? "
                 + "WHERE user_id = ?";
 
         try (Connection conn = connect();
@@ -174,8 +165,7 @@ public class UserDAO implements IUserDAO {
             pstmt.setString(2, ini);
             pstmt.setInt(3, cpr);
             pstmt.setString(4, password);
-            pstmt.setInt(5, groupID);
-            pstmt.setInt(6, id);
+            pstmt.setInt(5, id);
             // update
             pstmt.executeUpdate();
         } catch (SQLException e) {
