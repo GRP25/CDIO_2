@@ -2,7 +2,10 @@ package data;
 
 import java.util.List;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/userDTO
 public class UserDTO{
     String name;
     String password;
@@ -57,4 +60,8 @@ public class UserDTO{
     public void setCpr(int cpr) {
         this.cpr = cpr;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/userDTO
