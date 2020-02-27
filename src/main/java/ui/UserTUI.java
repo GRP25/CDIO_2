@@ -14,8 +14,6 @@ public class UserTUI implements  ITUI {
     public UserTUI() {
         input = new Scanner(System.in);
     }
-
-    @Override
     public void chooseDataBase() {
         input = new Scanner(System.in);
         System.out.println(lineBreak);
@@ -39,13 +37,11 @@ public class UserTUI implements  ITUI {
                 break;
         }
     }
-
-    @Override
     public void showMenu(int value) {
         if (value == 1) {
             func = (IFunc) new Func();
         } else if (value == 2) {
-            func = (IFunc) new functionality.memory.Func();
+            func = new functionality.sql.Func();
         } else {
             // TODO IMPLEMENT SQL FUNC
         }
@@ -58,8 +54,6 @@ public class UserTUI implements  ITUI {
         System.out.println("5. exit");
 
     }
-
-    @Override
     public void createUser() {
         System.out.println(lineBreak);
         System.out.println("Create user");
@@ -77,26 +71,16 @@ public class UserTUI implements  ITUI {
         // TODO
         //func.createUser(userName, userCPR);
     }
-
-    @Override
     public void showUserList() {
 
     }
-
-    @Override
     public void deleteUser() {
 
     }
-
-    @Override
     public void updateUser() {
 
     }
-
-    @Override
     public void exit() {
 
     }
-
-
 }
