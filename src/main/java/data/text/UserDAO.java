@@ -1,9 +1,15 @@
 package data.text;
 
+import data.IUserDAO;
+import data.UserDTO;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class UserDAO implements Serializable {
-
+    HashMap<Integer, UserDTO> userHMap = new HashMap<Integer, UserDTO>();
     String fileName = "C:..";
 
     private UserStore loadUsers() throws DALException {
@@ -55,5 +61,39 @@ public class UserDAO implements Serializable {
             }
         }
     }
+
+
+
+        public UserDTO getUser(int userID) {
+            return userHMap.get(userID);
+        }
+
+        //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
+
+        public void updateUser(int userID, String Username, String initials, int CPR, String password, ArrayList<String> roles, int id) {
+
+        }
+
+        //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
+
+        public void createUser(String username, String initials, int CPR, String password, ArrayList<String> roles, int id) {
+            UserDTO user = new UserDTO(username,password,roles,id,CPR);
+            userHMap.put(user.getId(),user);
+        }
+
+
+        public void deleteUser(int userID) {
+            userHMap.remove(userID);
+        }
+
+
+        public List<UserDTO> getUserList() {
+            List<UserDTO> list = new ArrayList<UserDTO>();
+
+            for(int id : userHMap.keySet()){
+                list.add(userHMap.get(id));
+            }
+            return list;
+        }
 
 }
