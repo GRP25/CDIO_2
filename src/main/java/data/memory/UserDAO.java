@@ -16,17 +16,18 @@ public class UserDAO implements IUserDAO {
         return userHMap.get(userID);
     }
 
-    //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
-    @Override
-    public void updateUser(int userID, String Username, String initials, int CPR, String password, ArrayList<String> roles, int id) {
 
+    public void updateUser(UserDTO user) {
+        UserDTO tempUser = user;
+        userHMap.remove(user.getId());
+
+        userHMap.put(tempUser.getId(),tempUser);
     }
 
     //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
     @Override
-    public void createUser(String username, String initials, int CPR, String password, ArrayList<String> roles, int id) {
-        UserDTO user = new UserDTO(username,password,roles,id,CPR);
-        userHMap.put(user.getId(),user);
+    public void createUser(UserDTO user) {
+      userHMap.put(user.getId(),user);
     }
 
     @Override
