@@ -10,5 +10,5 @@ public interface IUserDAO{
     void updateUser(UserDTO user);
     void createUser(UserDTO user);
     void deleteUser(int userID);
-    List<UserDTO> getUserList();
+    ArrayList<UserDTO> getUserList();
 }

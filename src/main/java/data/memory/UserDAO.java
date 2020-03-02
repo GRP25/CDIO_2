@@ -36,8 +36,8 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public List<UserDTO> getUserList() {
-        List<UserDTO> list = new ArrayList<UserDTO>();
+    public ArrayList<UserDTO> getUserList() {
+        ArrayList<UserDTO> list = new ArrayList<UserDTO>();
 
         for(int id : userHMap.keySet()){
            list.add(userHMap.get(id));
