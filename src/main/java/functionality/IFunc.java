@@ -1,10 +1,10 @@
-package data;
+package functionality;
 
-//import data.memory.UserDAO;
+import data.UserDTO;
 
 import java.util.ArrayList;
 
-public interface IUserDAO{
+public interface IFunc{
     UserDTO getUser(int userID);
     void updateUser(int userID, String Username, String initials, int CPR, String password, ArrayList<Integer> roles);
     void createUser(String Username, String initials, int CPR, String password, ArrayList<Integer> roles);
