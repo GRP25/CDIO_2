@@ -1,16 +1,17 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
     private String       name;
     private String    initials;
     private String    password;
     private ArrayList<String> roles;
     private int          id;
-    private int          cpr;
+    private String          cpr;
 
-    public UserDTO(String name, String password, ArrayList<String> roles, int id, int cpr) {
+    public UserDTO(String name, String password, ArrayList<String> roles, int id, String cpr) { //TODO tilføj initials parameter
         this.name = name;
         this.password = password;
         this.roles = roles;
@@ -33,7 +34,7 @@ public class UserDTO {
     public int getId() {
         return id;
     }
-    public int getCpr() {
+    public String getCpr() {
         return cpr;
     }
     public void setName(String name) {
@@ -51,7 +52,7 @@ public class UserDTO {
     public void setId(int id) {
         this.id = id;
     }
-    public void setCpr(int cpr) {
+    public void setCpr(String cpr) {
         this.cpr = cpr;
     }
 }

@@ -4,13 +4,12 @@ import data.IUserDAO;
 import data.UserDTO;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 
-public class UserDAO implements Serializable {
+public class UserDAO implements IUserDAO {
 
-    UserStore userStore;
-    String fileName = "C:..";
+    UserStore userStore = new UserStore();
+    String fileName = "storeUser.txt";
 
     private UserStore loadUsers() throws DALException {
         UserStore userStore = new UserStore();
@@ -19,6 +18,7 @@ public class UserDAO implements Serializable {
             FileInputStream fIS = new FileInputStream(fileName);
             oIS = new ObjectInputStream(fIS);
             Object inObj = oIS.readObject();
+
             if (inObj instanceof UserStore){
                 userStore = (UserStore) inObj;
             } else {
@@ -45,7 +45,7 @@ public class UserDAO implements Serializable {
         ObjectOutputStream oOS =null;
         try {
 
-            FileOutputStream fOS = new FileOutputStream(fileName);
+            OutputStream fOS = new FileOutputStream(fileName);
             oOS = new ObjectOutputStream(fOS);
             oOS.writeObject(users);
 
@@ -64,48 +64,53 @@ public class UserDAO implements Serializable {
         }
     }
 
-        public UserDTO getUser(int userID) {
+        public UserDTO getUser(int userID) throws DALException {
 
-            for (int i = 0; i < userStore.size(); i++)
+        ArrayList<UserDTO> getUser = loadUsers();
+            for (UserDTO userDTO : getUser) {
+                if (userDTO.getId() == userID)
+                    return userDTO;
+            }
+
+       // Iterator<UserDTO> iterator = userStore.iterator();
+
+
+
+
+        for (int i = 0; i < userStore.size(); i++)
                 if (userStore.get(i).getId() == userID)
                     return userStore.get(i);
 
             return null;
         }
 
-        //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
+    //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
 
-        public void updateUser(int userID, String Username, String initials, int CPR, String password, ArrayList<String> roles, int id) {
+    @Override
+    public void updateUser(UserDTO user) throws DALException {
+        deleteUser(user.getId());
+        createUser(user);
+    }
 
-            for (int i = 0; i < userStore.size(); i++)
-                if (userStore.get(i).getId() == userID){
 
-                    userStore.get(i).setName(Username);
-                    userStore.get(i).setInitials(initials);
-                    userStore.get(i).setCpr(CPR);
-                    userStore.get(i).setPassword(password);
-                    userStore.get(i).setRoles(roles);
-                    userStore.get(i).setId(id);
-                }
-        }
+
 
         //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
 
-        public void createUser(UserDTO userDTO){
-            userStore.add(userDTO);
+        public void createUser(UserDTO userDTO) throws DALException {
+            userStore.add(userDTO); // todo do we need this line ????
+            saveUsers(userStore); //TODO check hvis den nye arraylist overwriter den gamle
         }
 
-
-        public void deleteUser(int userID) {
+        public void deleteUser(int userID) throws DALException {
             for (int i = 0; i < userStore.size(); i++)
                 if (userStore.get(i).getId() == userID)
                     userStore.remove(i);
-
+            saveUsers(userStore); //TODO check hivs den nye arraylist overwriter den gamle
         }
 
-
-        public List<UserDTO> getUserList() {
-            return userStore;
+        public ArrayList<UserDTO> getUserList() throws DALException {
+            return loadUsers();
         }
 
 }

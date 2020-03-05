@@ -103,7 +103,7 @@ public class UserDAO implements IUserDAO {
                 user.setId(rs.getInt("user_id"));
                 user.setName(rs.getString("user_name"));
                 user.setInitials(rs.getString("user_init"));
-                user.setCpr(rs.getInt("user_cpr"));
+                user.setCpr(rs.getString("user_cpr"));
                 user.setPassword(rs.getString("user_password"));
                 user.setRoles(getUserRoles(rs.getInt("user_id")));
                 users.add(user);
@@ -134,7 +134,7 @@ public class UserDAO implements IUserDAO {
             user.setId(rs.getInt("user_id"));
             user.setName(rs.getString("user_name"));
             user.setInitials(rs.getString("user_init"));
-            user.setCpr(rs.getInt("user_cpr"));
+            user.setCpr(rs.getString("user_cpr"));
             user.setPassword(rs.getString("user_password"));
             user.setRoles(getUserRoles(rs.getInt("user_id")));
         } catch (SQLException e) {
@@ -142,6 +142,17 @@ public class UserDAO implements IUserDAO {
         }
         return user;
     }
+
+    @Override
+    public void updateUser(UserDTO user) {
+
+    }
+
+    @Override
+    public void createUser(UserDTO user) {
+
+    }
+
     public void updateUser(int id, String userName, String ini, int cpr, String password, ArrayList<Integer> rolesID) {
         /**
          * Update user with ID
