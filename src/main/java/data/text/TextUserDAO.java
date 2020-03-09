@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class UserDAO implements IUserDAO {
+public class TextUserDAO implements IUserDAO {
 
     UserStore userStore = new UserStore();
     String fileName = "storeUser.txt";

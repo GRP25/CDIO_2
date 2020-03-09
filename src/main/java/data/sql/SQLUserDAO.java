@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static data.sql.Ctrl.connect;
 
-public class UserDAO implements IUserDAO {
+public class SQLUserDAO implements IUserDAO {
     private ArrayList<String> getUserRoles(int userID){
         String getUserGroupsID = "SELECT group_id FROM has_role WHERE user_id = ?";
         String getUserGroups = "SELECT group_title FROM group WHERE group_id = ?";

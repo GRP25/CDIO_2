@@ -11,13 +11,22 @@ public class UserDTO implements Serializable {
     private int          id;
     private String          cpr;
 
-    public UserDTO(String name, String password, ArrayList<String> roles, int id, String cpr) { //TODO tilføj initials parameter
+    public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, String cpr) {
         this.name = name;
+        this.initials = initials;
         this.password = password;
         this.roles = roles;
         this.id = id;
         this.cpr = cpr;
     }
+
+    /*public UserDTO(String name, String password, ArrayList<String> roles, int id, String cpr) { //TODO tilføj initials parameter
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+        this.id = id;
+        this.cpr = cpr;
+    }*/
 
     public String getInitials() {
         return initials;

@@ -2,7 +2,6 @@ package ui;
 
 import functionality.*;
 import functionality.IFunc;
-import functionality.text.Func;
 
 import java.util.Scanner;
 
@@ -41,7 +40,7 @@ public class UserTUI implements  ITUI {
         if (value == 1) {
             func = (IFunc) new Func();
         } else if (value == 2) {
-            func = new functionality.sql.Func();
+            func = new functionality.Func();
         } else {
             // TODO IMPLEMENT SQL FUNC
         }

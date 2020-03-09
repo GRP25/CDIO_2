@@ -3,14 +3,12 @@ package data.text;
 import data.UserDTO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.DoubleToIntFunction;
 
 import static org.junit.Assert.*;
 
 public class UserDAOTest {
 
-    UserDAO userdao = new UserDAO();
+    TextUserDAO userdao = new TextUserDAO();
     ArrayList<String> arrayList = new ArrayList<>();
     UserDTO  userDTO1 = new UserDTO("test1,", "1111", arrayList, 111, "091202 - 1111");
     ;
