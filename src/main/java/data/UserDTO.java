@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserDTO implements Serializable {
-    private String       name;
-    private String    initials;
-    private String    password;
+    private String name;
+    private String initials;
+    private String password;
     private ArrayList<String> roles;
-    private int          id;
-    private String          cpr;
+    private int id;
+    private String cpr;
 
     public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, String cpr) {
         this.name = name;
@@ -19,14 +19,6 @@ public class UserDTO implements Serializable {
         this.id = id;
         this.cpr = cpr;
     }
-
-    /*public UserDTO(String name, String password, ArrayList<String> roles, int id, String cpr) { //TODO tilføj initials parameter
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
-        this.id = id;
-        this.cpr = cpr;
-    }*/
 
     public String getInitials() {
         return initials;

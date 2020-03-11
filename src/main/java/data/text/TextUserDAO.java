@@ -92,9 +92,6 @@ public class TextUserDAO implements IUserDAO {
         createUser(user);
     }
 
-
-
-
         //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
 
         public void createUser(UserDTO userDTO) throws DALException {
