@@ -9,7 +9,7 @@ public interface IFunc{
 
     void deleteUser(int userID) throws DALException;
 
-    void updateUser(UserDTO user);
+    void updateUser(UserDTO user) throws DALException;
 
     void createUser(UserDTO user) throws DALException;
 
