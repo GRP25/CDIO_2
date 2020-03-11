@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class UserDAOTest {
+/*public class UserDAOTest {
 
     TextUserDAO userdao = new TextUserDAO();
     ArrayList<String> arrayList = new ArrayList<>();
@@ -56,4 +56,4 @@ public class UserDAOTest {
 
         System.out.println(userdao.getUserList().get(0).getCpr());
     }
-}
+} */
