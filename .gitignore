@@ -1,7 +1,7 @@
 # VS CODE stuff
+.idea/*
 .classpath
 .settings
 .project
-.idea
 target/
 

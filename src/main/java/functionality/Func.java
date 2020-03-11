@@ -4,6 +4,7 @@ import data.UserDTO;
 import data.text.DALException;
 import data.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Func implements IFunc {
@@ -25,9 +26,13 @@ public class Func implements IFunc {
     }
 
     @Override
-    public void createUser(UserDTO user) throws DALException {
-        this.data.createUser(user);
+    public void createUser(String name, String initials, String password, ArrayList<String> roles, String cpr) throws DALException {
 
+        int id = this.data.getUserList().size() + 1;
+
+        UserDTO user = new UserDTO(name, initials, password, roles, id, cpr);
+
+        this.data.createUser(user);
     }
 
     @Override
