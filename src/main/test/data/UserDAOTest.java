@@ -36,7 +36,7 @@ public class UserDAOTest {
     public void createUser() throws DALException {
         arrayList.add("Admin");
         userdao.createUser(userDTO1);
-
+        assertTrue(userdao.getUser(1).getId() == userDTO1.getId());
     }
     @org.junit.Test
     public void deleteUser() throws DALException {
