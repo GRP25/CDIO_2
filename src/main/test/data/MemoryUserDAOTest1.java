@@ -2,6 +2,8 @@ package data;
 
 import data.memory.MemoryUserDAO;
 import data.text.DALException;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
@@ -18,7 +20,7 @@ public class MemoryUserDAOTest1 {
         UserDTO real = memoryUserDAO.getUser(195455);
         System.out.println(real.getName());
 
-        assertEquals(user1, real);
+        assertEquals(user1,real);
     }
 
 }

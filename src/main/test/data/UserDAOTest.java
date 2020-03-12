@@ -1,6 +1,8 @@
-package data.text;
+package data;
 
 import data.UserDTO;
+import data.text.DALException;
+import data.text.TextUserDAO;
 
 import java.util.ArrayList;
 
