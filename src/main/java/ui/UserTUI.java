@@ -3,7 +3,6 @@ package ui;
 import data.UserDTO;
 import data.text.DALException;
 import functionality.*;
-import functionality.IFunc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Scanner;
 
 public class UserTUI implements  ITUI {
     private int database;
-    private IFunc func;
+    private Func func;
     private Scanner input;
     private String lineBreak = "--------------------";
 
@@ -85,7 +84,7 @@ public class UserTUI implements  ITUI {
 
 
         System.out.println(lineBreak);
-        String userCPR = validateCPR("Please enter user CPR");
+        long userCPR = validateCPR("Please enter user CPR");
         System.out.println("CPR entered correctly as " + userCPR);
         System.out.println(lineBreak);
 
@@ -158,7 +157,7 @@ public class UserTUI implements  ITUI {
          return value;
     }
 
-    public String validateCPR(String val) {
+    public long validateCPR(String val) {
         long output;
         do {
             System.out.println(val);
@@ -168,7 +167,7 @@ public class UserTUI implements  ITUI {
             }
             output = input.nextLong();
         } while (1011930000 < output && output < 1212209999);
-        return String.valueOf(output);
+        return output;
     }
 
     public void exit() {
