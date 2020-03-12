@@ -11,6 +11,7 @@ public class UserDTO implements Serializable {
     private int id;
     private String cpr;
 
+
     public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, String cpr) {
         this.name = name;
         this.initials = initials;
@@ -18,6 +19,7 @@ public class UserDTO implements Serializable {
         this.roles = roles;
         this.id = id;
         this.cpr = cpr;
+
     }
 
     public String getInitials() {

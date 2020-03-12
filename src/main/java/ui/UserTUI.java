@@ -39,14 +39,14 @@ public class UserTUI implements  ITUI {
         }
     }
     public void showMenu(int value) throws DALException {
-        if (value == 1) {
+        /*if (value == 1) {
             func = (IFunc) new Func();
         } else if (value == 2) {
             func = new functionality.Func();
         } else {
             // TODO IMPLEMENT SQL FUNC
         }
-
+*/ //TODO fjerne kommenteret efter vi er færdige
         System.out.println(lineBreak);
         System.out.println("Please select which function you wish to perform");
         System.out.println("1. Create user");
