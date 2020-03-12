@@ -15,7 +15,7 @@ public class Initiation {
                 "   user_name text NOT NULL, \n" +
                 "   user_init text NOT NULL, \n" +
                 "   user_cpr integer NOT NULL UNIQUE, \n" +
-                "   user_password text NOT NULL \n" +
+                "   user_password text NOT NULL, \n" +
                 "   user_groups text NOT NULL \n" +
                 ");";
         try (

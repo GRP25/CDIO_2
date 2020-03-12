@@ -6,12 +6,12 @@ import data.UserDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static data.sql.Ctrl.connect;
+import static data.sql.Ctrl.*;
 
 public class UserDAO implements IUserDAO {
 
     public void createUser(UserDTO user) {
-        String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password, user_groups) VALUES(?,?,?,?,?)";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -19,6 +19,7 @@ public class UserDAO implements IUserDAO {
             pstmt.setString(2, user.getInitials());
             pstmt.setLong(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
+            pstmt.setString(5, groupToString(user.getRoles()));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Another user exists with this CPR number");
@@ -27,8 +28,7 @@ public class UserDAO implements IUserDAO {
 
     public ArrayList<UserDTO> getUserList() {
         String sql =
-                "SELECT user_id, user_name, user_init, user_cpr, user_password " +
-                        "FROM user ";
+                "SELECT * FROM user";
         ArrayList<UserDTO> users = new ArrayList<>();
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
@@ -45,6 +45,7 @@ public class UserDAO implements IUserDAO {
                 user.setInitials(rs.getString("user_init"));
                 user.setCpr(rs.getLong("user_cpr"));
                 user.setPassword(rs.getString("user_password"));
+                user.setRoles(stringToGroup(rs.getString("user_groups")));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -55,8 +56,7 @@ public class UserDAO implements IUserDAO {
 
     public UserDTO getUser(int ID) {
         UserDTO user = new UserDTO();
-        String sql = "SELECT user_name, user_init, user_cpr, user_password " +
-                "FROM user " +
+        String sql = "SELECT * FROM user" +
                 "WHERE user_id = ?;";
 
         try (
@@ -70,6 +70,7 @@ public class UserDAO implements IUserDAO {
             user.setInitials(rs.getString("user_init"));
             user.setCpr(rs.getLong("user_cpr"));
             user.setPassword(rs.getString("user_password"));
+            user.setRoles(stringToGroup(rs.getString("user_groups")));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -81,6 +82,7 @@ public class UserDAO implements IUserDAO {
                 + "user_init = ? , "
                 + "user_cpr = ? , "
                 + "user_password = ? "
+                + "user_groups = ? "
                 + "WHERE user_id = ?";
 
         try (Connection conn = connect();
@@ -92,6 +94,7 @@ public class UserDAO implements IUserDAO {
             pstmt.setLong(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
             pstmt.setInt(5, user.getId());
+            pstmt.setString(6, groupToString(user.getRoles()));
             // update
             pstmt.executeUpdate();
         } catch (SQLException e) {
