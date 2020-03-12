@@ -1,9 +1,10 @@
+import data.text.DALException;
 import ui.ITUI;
 import ui.UserTUI;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws DALException {
         ITUI tui = new UserTUI();
-        //tui.chooseDataBase(); //TODO fjerner kommenteret når vi er færdige
+        tui.chooseDataBase();
     }
 }
