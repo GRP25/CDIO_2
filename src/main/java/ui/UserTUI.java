@@ -31,25 +31,21 @@ public class UserTUI implements  ITUI {
         database = input.nextInt();
         switch (database) {
             case 1:
-                showMenu(database);
+                this.func = new Func(1);
+                showMenu();
                 break;
             case 2:
-                showMenu(database);
+                this.func = new Func(2);
+                showMenu();
                 break;
             case 3:
-                showMenu(database);
+                this.func = new Func(3);
+                showMenu();
                 break;
         }
     }
-    public void showMenu(int value) throws DALException {
-        if (value == 1) {
-            func = new Func(1);
-        } else if (value == 2) {
-            func = new Func(2);
-        } else {
-            func = new Func(3);
-        }
 
+    public void showMenu() throws DALException {
         System.out.println(lineBreak);
         System.out.println("Please select which function you wish to perform");
         System.out.println("1. Create user");
@@ -121,7 +117,7 @@ public class UserTUI implements  ITUI {
         } catch (Exception e) {
 
         }
-        showMenu(database);
+        showMenu();
 
     }
     public void showUserList() throws DALException {
@@ -131,14 +127,15 @@ public class UserTUI implements  ITUI {
         //TODO: Try to use System.out.format, and either for or foreach loop
         //
         //
-
-        String leftAlignFormat = "| %-15s | %-4d | %n";
-        System.out.format("+--------+----------+---------+------+------+%n");
-        System.out.format("| Name   | Initials |  Roles  |  Id  |  CPR |%n");
-        System.out.format("+--------+----------+---------+------+------+%n");
-
-
-        showMenu(database);
+        String leftAlignFormat = "| %-15s | %-5s | %-6s | %-2d | %-10s |%n";
+        System.out.format("+-----------------+------+------+-----+-----------+%n");
+        System.out.format("| Name            |Init  |Roles |Id   |CPR        |%n");
+        System.out.format("+-----------------+------+------+-----+-----------+%n");
+        for (UserDTO element : users) {
+            System.out.format(leftAlignFormat, element.getName(), element.getInitials(), element.getRoles().get(0), element.getId(), element.getCpr());
+        }
+        System.out.format("+-----------------+-----+-----+-----+-----------+%n");
+        showMenu();
     }
     public void deleteUser() throws DALException {
         System.out.println("Enter the id of the user you wish to delete");
@@ -146,7 +143,7 @@ public class UserTUI implements  ITUI {
         func.deleteUser(id);
         System.out.println("User " + id + " Succesfully deleted");
 
-        showMenu(database);
+        showMenu();
     }
     public void updateUser() {
 
@@ -166,15 +163,15 @@ public class UserTUI implements  ITUI {
     }
 
     public String validateCPR(String val) {
-        int output;
+        long output;
         do {
             System.out.println(val);
             while(!input.hasNextInt()) {
                 System.out.println("Please enter a valid CPR number");
                 input.next();
             }
-            output = input.nextInt();
-        } while (String.valueOf(output).length() < 10);
+            output = input.nextLong();
+        } while (1011930000 < output && output < 1212209999);
         return String.valueOf(output);
     }
 
