@@ -1,5 +1,4 @@
 package data.text;
-
 import data.IUserDAO;
 import data.UserDTO;
 import java.io.*;
@@ -10,6 +9,7 @@ public class TextUserDAO implements IUserDAO {
 
     UserStore userStore = new UserStore();
     String fileName = "storeUser.txt";
+
 
     private UserStore loadUsers() throws DALException {
         UserStore userStore = new UserStore();
@@ -63,28 +63,14 @@ public class TextUserDAO implements IUserDAO {
             }
         }
     }
-
         public UserDTO getUser(int userID) throws DALException {
-
         ArrayList<UserDTO> getUser = loadUsers();
             for (UserDTO userDTO : getUser) {
                 if (userDTO.getId() == userID)
                     return userDTO;
             }
-
-       // Iterator<UserDTO> iterator = userStore.iterator();
-
-
-
-
-        for (int i = 0; i < userStore.size(); i++)
-                if (userStore.get(i).getId() == userID)
-                    return userStore.get(i);
-
             return null;
         }
-
-    //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
 
     @Override
     public void updateUser(UserDTO user) throws DALException {
@@ -92,18 +78,31 @@ public class TextUserDAO implements IUserDAO {
         createUser(user);
     }
 
-        //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
-
         public void createUser(UserDTO userDTO) throws DALException {
-            userStore.add(userDTO); // todo do we need this line ????
-            saveUsers(userStore); //TODO check hvis den nye arraylist overwriter den gamle
+            if (getUser(userDTO.getId()) != null)
+            {
+               throw new DALException(userDTO.getId());
+            }
+            else {
+            userStore.add(userDTO);
+            saveUsers(userStore);
         }
+    }
 
         public void deleteUser(int userID) throws DALException {
-            for (int i = 0; i < userStore.size(); i++)
-                if (userStore.get(i).getId() == userID)
-                    userStore.remove(i);
-            saveUsers(userStore); //TODO check hivs den nye arraylist overwriter den gamle
+
+        if(getUser(userID) == null){
+            throw new DALException("User findes ikke: " + userID);
+        }
+        else{
+            ArrayList<UserDTO> getUser = loadUsers();
+            for (UserDTO userDTO : getUser)
+                if (userDTO.getId() == userID){
+                    getUser.remove(userDTO);
+                    break;
+                }
+            saveUsers(userStore);
+        }
         }
 
         public ArrayList<UserDTO> getUserList() throws DALException {

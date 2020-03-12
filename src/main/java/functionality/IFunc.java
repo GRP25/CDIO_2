@@ -18,5 +18,4 @@ public interface IFunc{
 
     List<UserDTO> getUserList() throws DALException;
 
-
 }

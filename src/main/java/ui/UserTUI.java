@@ -1,6 +1,5 @@
 package ui;
 
-import data.IUserDAO;
 import data.UserDTO;
 import data.text.DALException;
 import functionality.*;
@@ -124,9 +123,6 @@ public class UserTUI implements  ITUI {
         System.out.println("Showing user list");
         List<UserDTO> users = func.getUserList();
 
-        //TODO: Try to use System.out.format, and either for or foreach loop
-        //
-        //
         String leftAlignFormat = "| %-15s | %-5s | %-6s | %-2d | %-10s |%n";
         System.out.format("+-----------------+------+------+-----+-----------+%n");
         System.out.format("| Name            |Init  |Roles |Id   |CPR        |%n");
@@ -179,3 +175,4 @@ public class UserTUI implements  ITUI {
         System.exit(0);
     }
 }
+

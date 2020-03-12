@@ -1,30 +1,30 @@
-package data.text;
 
 import data.UserDTO;
+import data.text.DALException;
+import data.text.TextUserDAO;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/*public class UserDAOTest {
+public class UserDAOTest {
+
 
     TextUserDAO userdao = new TextUserDAO();
     ArrayList<String> arrayList = new ArrayList<>();
-    UserDTO  userDTO1 = new UserDTO("test1,", "1111", arrayList, 111, "091202 - 1111");
-    ;
-
+    UserDTO  userDTO1 = new UserDTO("Andrey", "AB", "0000", arrayList, 1, "091194-3441");
 
     @org.junit.Test
     public void getUser() throws DALException {
-        UserDTO actual = userdao.getUser(111);
-        System.out.println(actual.getName());
+        UserDTO actual = userdao.getUser(1);
+        //System.out.println(actual.getName());
 
-        assertEquals(userDTO1, actual);
+        assertEquals(userDTO1.getId(), actual.getId());
     }
 
     @org.junit.Test
     public void updateUser() throws DALException {
-        UserDTO user = new UserDTO("update", "updatepw", arrayList, 111, "32895725");
+        UserDTO user = new UserDTO("Andrey", "AB", "0000", arrayList, 1, "091194-3441");
         arrayList.add("Chif");
         userdao.updateUser(user);
         System.out.println(userdao.getUser(111).getName());
@@ -35,14 +35,13 @@ import static org.junit.Assert.*;
     @org.junit.Test
     public void createUser() throws DALException {
         arrayList.add("Admin");
-          userdao.createUser(userDTO1);
+        userdao.createUser(userDTO1);
 
-        // TODO how to add users in a loop instead of manually add each user
     }
     @org.junit.Test
     public void deleteUser() throws DALException {
-        userdao.deleteUser(444);
-        assertEquals(null, userdao.getUser(444));
+        userdao.deleteUser(1);
+        assertEquals(null, userdao.getUser(1));
     }
 
     @org.junit.Test
@@ -56,4 +55,4 @@ import static org.junit.Assert.*;
 
         System.out.println(userdao.getUserList().get(0).getCpr());
     }
-} */
+}
