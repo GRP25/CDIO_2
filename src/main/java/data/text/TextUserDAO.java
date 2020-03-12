@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class UserDAO implements IUserDAO {
+public class TextUserDAO implements IUserDAO {
 
     UserStore userStore = new UserStore();
     String fileName = "storeUser.txt";
@@ -91,9 +91,6 @@ public class UserDAO implements IUserDAO {
         deleteUser(user.getId());
         createUser(user);
     }
-
-
-
 
         //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
 

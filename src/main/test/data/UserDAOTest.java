@@ -1,16 +1,16 @@
-package data.text;
+package data;
 
 import data.UserDTO;
+import data.text.DALException;
+import data.text.TextUserDAO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.DoubleToIntFunction;
 
 import static org.junit.Assert.*;
 
-public class UserDAOTest {
+/*public class UserDAOTest {
 
-    UserDAO userdao = new UserDAO();
+    TextUserDAO userdao = new TextUserDAO();
     ArrayList<String> arrayList = new ArrayList<>();
     UserDTO  userDTO1 = new UserDTO("test1,", "1111", arrayList, 111, "091202 - 1111");
     ;
@@ -58,4 +58,4 @@ public class UserDAOTest {
 
         System.out.println(userdao.getUserList().get(0).getCpr());
     }
-}
+} */
