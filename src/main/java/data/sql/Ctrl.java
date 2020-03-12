@@ -1,18 +1,15 @@
 package data.sql;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Ctrl {
-    //PRIVATE METHODS
+
+    static String       database    = "DB/test.db";
+
     static Connection connect() {
-        /**
-         * Connect to the test.db database
-         * @return the Connection object
-         */
-        // SQLite connection to database
-        String url = "jdbc:sqlite:" + "db.db";
+        // SQLite connection string
+        String     url  = "jdbc:sqlite:" + database;
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -21,7 +18,6 @@ public class Ctrl {
         }
         return conn;
     }
-
 
 
 }

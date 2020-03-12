@@ -6,9 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CDIO_1" />
-        <module name="25_CDIO1" />
+        <module name="cdio_1" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cdio_1" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

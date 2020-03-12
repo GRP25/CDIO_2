@@ -9,10 +9,10 @@ public class UserDTO implements Serializable {
     private String password;
     private ArrayList<String> roles;
     private int id;
-    private String cpr;
+    private long cpr;
 
 
-    public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, String cpr) {
+    public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, long cpr) {
         this.name = name;
         this.initials = initials;
         this.password = password;
@@ -20,6 +20,9 @@ public class UserDTO implements Serializable {
         this.id = id;
         this.cpr = cpr;
 
+    }
+    public UserDTO(){
+        //Denne contruktor er her fordi at jeg skal bruge en tom constructor i SQL -- Martin
     }
 
     public String getInitials() {
@@ -37,7 +40,7 @@ public class UserDTO implements Serializable {
     public int getId() {
         return id;
     }
-    public String getCpr() {
+    public long getCpr() {
         return cpr;
     }
     public void setName(String name) {
@@ -55,7 +58,7 @@ public class UserDTO implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public void setCpr(String cpr) {
+    public void setCpr(long cpr) {
         this.cpr = cpr;
     }
 }
