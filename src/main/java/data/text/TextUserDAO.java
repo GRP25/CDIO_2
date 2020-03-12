@@ -72,15 +72,11 @@ public class TextUserDAO implements IUserDAO {
             return null;
         }
 
-    //TODO jeg ved ikke hvordan jeg skal lave den her metode lige nu da der er kommet flere parametre ind.
-
     @Override
     public void updateUser(UserDTO user) throws DALException {
         deleteUser(user.getId());
         createUser(user);
     }
-
-        //TODO snak igennem alle de her parametre fordi nogle af dem giver ingen megning.
 
         public void createUser(UserDTO userDTO) throws DALException {
             if (getUser(userDTO.getId()) != null)
@@ -88,8 +84,8 @@ public class TextUserDAO implements IUserDAO {
                throw new DALException(userDTO.getId());
             }
             else {
-            userStore.add(userDTO); // todo do we need this line ???? // Vi har brug for det fordi --> læs parameteret i saveuser metoden fra stig's cdio text
-            saveUsers(userStore); //TODO check hvis den nye arraylist overwriter den gamle
+            userStore.add(userDTO);
+            saveUsers(userStore);
         }
     }
 
@@ -105,7 +101,7 @@ public class TextUserDAO implements IUserDAO {
                     getUser.remove(userDTO);
                     break;
                 }
-            saveUsers(userStore); //TODO check hivs den nye arraylist overwriter den gamle
+            saveUsers(userStore);
         }
         }
 

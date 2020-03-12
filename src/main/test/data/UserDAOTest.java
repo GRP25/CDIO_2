@@ -37,7 +37,6 @@ public class UserDAOTest {
         arrayList.add("Admin");
         userdao.createUser(userDTO1);
 
-        // TODO how to add users in a loop instead of manually add each user
     }
     @org.junit.Test
     public void deleteUser() throws DALException {
