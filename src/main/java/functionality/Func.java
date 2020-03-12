@@ -4,6 +4,7 @@ import data.UserDTO;
 import data.text.DALException;
 import data.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,14 @@ public class Func implements IFunc {
 
     IUserDAO data;
 
-    public Func(IUserDAO dataImport) {
-        this.data = dataImport;
+    public Func(int database) {
+        if (database == 1) {
+            this.data = new data.text.TextUserDAO();
+        } else if (database == 2) {
+            this.data = new data.memory.MemoryUserDAO();
+        } else {
+            this.data = new data.sql.SQLUserDAO();
+        }
     }
 
     @Override

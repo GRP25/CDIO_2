@@ -4,8 +4,8 @@ import data.text.DALException;
 
 public interface ITUI {
     void chooseDataBase() throws DALException;
-    void showMenu(int i) throws DALException;
-    void createUser();
+    void showMenu() throws DALException;
+    void createUser() throws DALException;
     void showUserList() throws DALException;
     void deleteUser() throws DALException;
     void updateUser();
