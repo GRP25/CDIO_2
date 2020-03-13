@@ -125,7 +125,7 @@ public class UserTUI {
 
         showMenu();
     }
-    public void updateUser() {
+    public void updateUser() throws DALException {
         ArrayList<String> roles = new ArrayList<>();
         System.out.println(lineBreak);
         System.out.println("Please enter the ID of the user you wish to update");
@@ -160,7 +160,7 @@ public class UserTUI {
         } catch (Exception e) {
 
         }
-
+        showMenu();
     }
 
     public ArrayList<String> addRoles () {
