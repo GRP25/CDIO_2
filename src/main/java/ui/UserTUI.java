@@ -5,6 +5,7 @@ import data.text.DALException;
 import functionality.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,26 +52,32 @@ public class UserTUI {
         System.out.println("3. Update user");
         System.out.println("4. Show user list");
         System.out.println("5. exit");
+        try {
+            int selectValue = validateAttr("Enter value now");
 
-        int selectValue = input.nextInt();
-
-        switch (selectValue) {
-            case 1:
-                createUser();
-                break;
-            case 2:
-                deleteUser();
-                break;
-            case 3:
-                updateUser();
-                break;
-            case 4:
-                showUserList();
-                break;
-            case 5:
-                exit();
-                break;
+            switch (selectValue) {
+                case 1:
+                    createUser();
+                    break;
+                case 2:
+                    deleteUser();
+                    break;
+                case 3:
+                    updateUser();
+                    break;
+                case 4:
+                    showUserList();
+                    break;
+                case 5:
+                    exit();
+                    break;
+            }
+        }  catch (InputMismatchException e){
+            input.next();
+            System.out.println("You have to enter a correct value, rebooting menu");
+            showMenu();
         }
+
     }
     public void createUser() throws DALException {
         System.out.println(lineBreak);
@@ -126,6 +133,7 @@ public class UserTUI {
         showMenu();
     }
     public void updateUser() throws DALException {
+        int attribute = -1;
         ArrayList<String> roles = new ArrayList<>();
         System.out.println(lineBreak);
         System.out.println("Please enter the ID of the user you wish to update");
@@ -143,7 +151,14 @@ public class UserTUI {
         System.out.println("3. password");
         System.out.println("4. roles");
         System.out.println("5. cpr");
-        int attribute = validateAttr("Enter value now");
+        try {
+            attribute = validateAttr("Enter value now");
+
+        } catch(InputMismatchException e) {
+            input.next();
+            System.out.println("You have to enter a correct value, rebooting menu");
+            showMenu();
+        }
         String change;
         System.out.println(lineBreak);
         if( attribute == 5)
