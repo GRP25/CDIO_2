@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserDTO implements Serializable {
+    private static final long serialVersionUID = 150643518387140262L;
     private String name;
     private String initials;
     private String password;
