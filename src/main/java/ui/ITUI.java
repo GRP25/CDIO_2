@@ -8,6 +8,6 @@ public interface ITUI {
     void createUser() throws DALException;
     void showUserList() throws DALException;
     void deleteUser() throws DALException;
-    void updateUser();
+    void updateUser() throws DALException;
     void exit();
 }
