@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserTUI implements  ITUI {
+public class UserTUI {
     private int database;
     private Func func;
     private Scanner input;
@@ -84,26 +84,11 @@ public class UserTUI implements  ITUI {
 
 
         System.out.println(lineBreak);
-        long userCPR = validateCPR("Please enter user CPR");
+        String userCPR = validateCPR("Please enter user CPR");
         System.out.println("CPR entered correctly as " + userCPR);
         System.out.println(lineBreak);
 
-        ArrayList<String> roles = new ArrayList<>();
-        boolean moreRoles;
-        do {
-            String role = validateString("Please enter the users role");
-            roles.add(role);
-            System.out.println("Role entered correctly as " + role);
-            System.out.println("Does the user have more roles?");
-            System.out.println("1. Yes");
-            System.out.println("2. No");
-            int v = input.nextInt();
-            if (v == 1) {
-                moreRoles = true;
-            } else {
-                moreRoles = false;
-            }
-        } while(moreRoles == true);
+        ArrayList roles = addRoles();
         System.out.println("All roles entered correctly");
 
         System.out.println(lineBreak);
@@ -141,7 +126,75 @@ public class UserTUI implements  ITUI {
         showMenu();
     }
     public void updateUser() {
+        ArrayList<String> roles = new ArrayList<>();
+        System.out.println(lineBreak);
+        System.out.println("Please enter the ID of the user you wish to update");
+        int id = input.nextInt();
+        try{
+            func.getUser(id);
+        } catch (Exception e) {
+            System.out.println("No such user in database, please enter a valid ID");
+            updateUser();
+        }
 
+        System.out.println("User " + id +": Which attribute do you wish to change?");
+        System.out.println("1. Name");
+        System.out.println("2. initials");
+        System.out.println("3. password");
+        System.out.println("4. roles");
+        System.out.println("5. cpr");
+        int attribute = validateAttr("Enter value now");
+        String change;
+        System.out.println(lineBreak);
+        if( attribute == 5)
+            change = validateCPR("What do you want to change the attribute to?");
+        else if (attribute == 4) {
+            change = null;
+            roles = addRoles();
+        } else {
+            change = validateString("What do you want to change What do you want to change the attribute to?");
+
+        }
+        try {
+            func.updateUser(id, attribute, change, roles);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public ArrayList<String> addRoles () {
+        ArrayList<String> roles = new ArrayList<>();
+        boolean moreRoles;
+        do {
+            String role = validateString("Please enter the users role");
+            roles.add(role);
+            System.out.println("Role entered correctly as " + role);
+            System.out.println("Does the user have more roles?");
+            System.out.println("1. Yes");
+            System.out.println("2. No");
+            int v = input.nextInt();
+            if (v == 1) {
+                moreRoles = true;
+            } else {
+                moreRoles = false;
+            }
+        } while(moreRoles == true);
+        return roles;
+    }
+
+    public int validateAttr( String val) {
+        int value;
+        boolean match = false;
+        do {
+            System.out.println(val);
+            value = input.nextInt();
+            if (value == 1 || value == 2 || value == 3 || value == 4 || value == 5) {
+                match = true;
+            }
+
+        }while(match == false);
+        return value;
     }
 
     public String validateString(String val) {
@@ -157,7 +210,7 @@ public class UserTUI implements  ITUI {
          return value;
     }
 
-    public long validateCPR(String val) {
+    public String validateCPR(String val) {
         long output;
         do {
             System.out.println(val);
@@ -167,7 +220,7 @@ public class UserTUI implements  ITUI {
             }
             output = input.nextLong();
         } while (1011930000 < output && output < 1212209999);
-        return output;
+        return String.valueOf(output);
     }
 
     public void exit() {

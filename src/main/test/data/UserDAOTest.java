@@ -1,3 +1,4 @@
+package data;
 
 import data.UserDTO;
 import data.text.DALException;
@@ -12,7 +13,7 @@ public class UserDAOTest {
 
     TextUserDAO userdao = new TextUserDAO();
     ArrayList<String> arrayList = new ArrayList<>();
-    UserDTO  userDTO1 = new UserDTO("Andrey", "AB", "0000", arrayList, 1, "091194-3441");
+    UserDTO  userDTO1 = new UserDTO("Andrey", "AB", "0000", arrayList, 1, 2020100771);
 
     @org.junit.Test
     public void getUser() throws DALException {
@@ -24,7 +25,7 @@ public class UserDAOTest {
 
     @org.junit.Test
     public void updateUser() throws DALException {
-        UserDTO user = new UserDTO("Andrey", "AB", "0000", arrayList, 1, "091194-3441");
+        UserDTO user = new UserDTO("Andrey", "AB", "0000", arrayList, 1, 0612601234);
         arrayList.add("Chif");
         userdao.updateUser(user);
         System.out.println(userdao.getUser(111).getName());
