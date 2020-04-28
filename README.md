@@ -2,5 +2,5 @@
 
 # Hvem skal lave hvad til næste gang
 * Thomas og Daniel kigger på Frontend (HTML/CSS/JavaScript)
-* Mohamed og Andrey kigger på Backend(Tomcat)
+* Mohamed og Andrey kigger på Backend Funktionslaget(Tomcat)
 * Oliver og Martin kigger på Datalaget(JavaFilerne)
