@@ -11,3 +11,6 @@
 # Datalag (Oliver og Martin)
 * Database: 3 tabeller: User, Roles, userRoles.
 * Ændre i UserDAO til den nye database.
+## Specifikke opgager
++ Sæt postgreSQL database op
++ Ctrl.java connection skal sættes op til serveren

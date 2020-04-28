@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Ctrl {
-
     static String       database    = "DB/test.db";
-
     static Connection connect() {
         // SQLite connection string
         String     url  = "jdbc:sqlite:" + database;
