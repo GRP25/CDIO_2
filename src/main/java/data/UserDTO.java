@@ -3,22 +3,21 @@ package data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserDTO implements Serializable {
-    private static final long serialVersionUID = 150643518387140262L;
+public class UserDTO {
+    private int id;
     private String name;
     private String initials;
     private String password;
     private ArrayList<String> roles;
-    private int id;
     private long cpr;
 
 
     public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, long cpr) {
+        this.id = id;
         this.name = name;
         this.initials = initials;
         this.password = password;
         this.roles = roles;
-        this.id = id;
         this.cpr = cpr;
 
     }
