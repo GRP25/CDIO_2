@@ -8,15 +8,17 @@ CREATE TABLE user (
     );
 
 CREATE TABLE roles (
-    roles_id INT AUTO_INCREMENT,
     roles_title VARCHAR(36) NOT NULL, 
-    PRIMARY KEY ( roles_id ) 
+    PRIMARY KEY ( roles_title ) 
     );
 
 CREATE TABLE has_roles (
     user_id INT NOT NULL,
-    roles_id INT NOT NULL,
+    roles_title VARCHAR(36) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(user_id),
-    FOREIGN KEY (roles_id) REFERENCES roles(roles_id),
-    UNIQUE (roles_id, user_id)
+    FOREIGN KEY (roles_title) REFERENCES roles(roles_title),
+    UNIQUE (roles_title, user_id)
     );
+
+INSERT INTO roles (roles_title) VALUES ('Admin'), ('Pharmaceut'), ('Produktionsleder'), ('Laborant')
+
