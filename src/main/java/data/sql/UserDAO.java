@@ -27,12 +27,12 @@ public class UserDAO implements IUserDAO {
     }
 
     public ArrayList<UserDTO> getUserList() {
-        String sql =
-                "SELECT * FROM user";
+        String sql = "SELECT * FROM user";
         ArrayList<UserDTO> users = new ArrayList<>();
-        try (Connection conn = connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try {
+            Connection conn = connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             // loop through the result set
             UserDTO user;
@@ -45,12 +45,33 @@ public class UserDAO implements IUserDAO {
                 user.setInitials(rs.getString("user_init"));
                 user.setCpr(rs.getLong("user_cpr"));
                 user.setPassword(rs.getString("user_password"));
-                user.setRoles(stringToGroup(rs.getString("user_groups")));
+            //    user.setRoles(stringToGroup(rs.getString("user_groups")));
                 users.add(user);
             }
-        } catch (SQLException e) {
+
+            for (UserDTO userTemp : users) {
+                sql = "SELECT user_roles.roles_id, roles.roles_title FROM user_roles WHERE user_id=" + userTemp.getId() +
+                      " INNER JOIN roles ON user_roles.roles_id = roles.roles_id";
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery(sql);
+                ArrayList<String> roleList = new ArrayList<>();
+                
+                while (rs.next()) {
+                    roleList.add(rs.getString("roles_title"));
+                }
+
+                userTemp.setRoles(roleList);
+            }
+
+            // closing connections
+            conn.close();
+            stmt.close();
+            rs.close();
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return users;
     }
 
