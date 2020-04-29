@@ -15,7 +15,7 @@ CREATE TABLE roles (
 CREATE TABLE has_roles (
     user_id INT NOT NULL,
     roles_title VARCHAR(36) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
     FOREIGN KEY (roles_title) REFERENCES roles(roles_title),
     UNIQUE (roles_title, user_id)
     );

@@ -1,14 +1,18 @@
 package data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserDTO {
     private int id;
+    @NotNull
     private String name;
     private String initials;
+    @NotNull
     private String password;
     private ArrayList<String> roles;
+    @NotNull
     private long cpr;
 
 
@@ -60,5 +64,13 @@ public class UserDTO {
     }
     public void setCpr(long cpr) {
         this.cpr = cpr;
+    }
+    public String toString(){
+        return this.id +"\n"+
+                this.name+"\n"+
+                this.cpr+"\n"+
+                this.initials+"\n"+
+                this.password+"\n";
+        // roles not included
     }
 }

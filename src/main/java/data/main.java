@@ -10,15 +10,36 @@ public class main {
         ArrayList<String> roles = new ArrayList<>();
         roles.add("Admin");
         roles.add("Produktionsleder");
-        roles.add("Pharmaceut");
         UserDTO user = new UserDTO("Oliver Poulsen", "BM","dontworrybehappy",roles,1,1652022111);
-        db.createUser(user);
-        ArrayList<UserDTO> users = db.getUserList();
-        for(UserDTO u : users){
-            System.out.println(u.getName());
-            for(String r : u.getRoles()) {
-                System.out.println(r);
-            }
-        }
+        db.updateUser(user);
+
+
+        //db.deleteUser(4);
+
+
+
+
+
+        //UserDTO user = db.getUser(7);
+        //System.out.println(user);
+        //for(String r : user.getRoles()) {
+        //    System.out.println(r);
+        //}
+
+
+
+
+
+
+        //roles.add("Pharmaceut");
+        //UserDTO user = new UserDTO("Oliver Poulsen", "BM","dontworrybehappy",roles,1,1652022111);
+        //db.createUser(user);
+        //ArrayList<UserDTO> users = db.getUserList();
+        //for(UserDTO u : users){
+        //    System.out.println(u.getName());
+        //    for(String r : u.getRoles()) {
+        //        System.out.println(r);
+        //    }
+        //}
     }
 }
