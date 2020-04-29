@@ -13,13 +13,33 @@ public class UserDAO implements IUserDAO {
     public void createUser(UserDTO user) {
         String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password) VALUES(?,?,?,?)";
 
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getInitials());
             pstmt.setLong(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
             pstmt.executeUpdate();
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
+
+            // getting id from last inserted user
+            String ID = "";
+            while (rs.next()) {
+                ID = rs.getString("LAST_INSERT_ID()");
+            }
+            
+            // assigning roles to user
+            sql = "INSERT INTO has_roles (user_id, roles_title) VALUES ";
+            for (String role :  user.getRoles()) {
+                sql += "('" + ID + "', '" + role + "'),";
+            }
+            sql = sql.substring(0,sql.length() - 1);
+            stmt.executeQuery(sql);
+
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -49,7 +69,7 @@ public class UserDAO implements IUserDAO {
             }
 
             for (UserDTO userTemp : users) {
-                sql = "SELECT roles_title FROM has_roles  WHERE user_id=" + userTemp.getId();
+                sql = "SELECT roles_title FROM has_roles WHERE user_id=" + userTemp.getId();
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(sql);
                 ArrayList<String> roleList = new ArrayList<>();
