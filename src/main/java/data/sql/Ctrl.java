@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Ctrl {
-    static String       database    = "DB/test.db";
+
     static Connection connect() {
-        // SQLite connection string
-        String     url  = "jdbc:sqlite:" + database;
+        String user, pass, url;
+        user = "cdio";
+        pass = "HmDjHb0b4123";
+        url = "jdbc:mariadb://mama.sh:4123/cdio2";
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
+            Class.forName("org.mariadb.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return conn;

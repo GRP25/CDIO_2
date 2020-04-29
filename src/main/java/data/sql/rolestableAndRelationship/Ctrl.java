@@ -1,4 +1,10 @@
+import javax.enterprise.context.RequestScoped;
+import java.sql.*;
+import java.util.ArrayList;
+
+@RequestScoped
 public class Ctrl {
+
 
     static void removeGroupRelations(int userID) {
         String sql = "DELETE from has_group WHERE user_id = ?";
@@ -7,6 +13,19 @@ public class Ctrl {
                 PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
             pstmt.setInt(1, userID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void removePermissionRelations(int id) {
+        String sql = "DELETE from has_permission WHERE group_id = ?";
+        try (
+                Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -56,4 +75,51 @@ public class Ctrl {
         }
 
     }
+
+    static ArrayList<PermissionDTO> getGroupPermissions(ArrayList<Integer> ids) {
+        ArrayList<PermissionDTO> permissions = new ArrayList<>();
+        PermissionDAO            link        = new Permission();
+        PermissionDTO            permission;
+        for (int id : ids) {
+            permission = link.select(id);
+            permissions.add(permission);
+        }
+        return permissions;
+    }
+
+    static ArrayList<Integer> getGroupPermissionIDs(int id) {
+        String             sql      = "SELECT permission_id FROM has_permission WHERE group_id = ?";
+        ArrayList<Integer> groupIds = new ArrayList<>();
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                groupIds.add(rs.getInt("permission_id"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return groupIds;
+    }
+
+    static void setGroupPermissions(int id, ArrayList<PermissionDTO> permissions) {
+        String sql = "INSERT INTO has_permission (group_id, permission_id) VALUES(?,?)";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            for (PermissionDTO permission : permissions) {
+                pstmt.setInt(1, id);
+                pstmt.setInt(2, permission.getId());
+                pstmt.executeUpdate();
+            }
+        } catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
 }

@@ -11,7 +11,7 @@ import static data.sql.Ctrl.*;
 public class UserDAO implements IUserDAO {
 
     public void createUser(UserDTO user) {
-        String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password, user_groups) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO user (user_name,user_init,user_cpr,user_password) VALUES(?,?,?,?)";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -19,10 +19,9 @@ public class UserDAO implements IUserDAO {
             pstmt.setString(2, user.getInitials());
             pstmt.setLong(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
-            pstmt.setString(5, groupToString(user.getRoles()));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Another user exists with this CPR number");
+            System.out.println(e);
         }
     }
 
@@ -50,7 +49,7 @@ public class UserDAO implements IUserDAO {
             }
 
             for (UserDTO userTemp : users) {
-                sql = "SELECT user_roles.roles_id, roles.roles_title FROM user_roles WHERE user_id=" + userTemp.getId() +
+                sql = "SELECT user_roles.roles_id, roles.roles_title FROM user_roles WHERE user_id = " + userTemp.getId() +
                       " INNER JOIN roles ON user_roles.roles_id = roles.roles_id";
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(sql);
