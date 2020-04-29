@@ -9,7 +9,7 @@
 
 
 # Datalag (Oliver og Martin)
-* Database: 3 tabeller: User, Roles, userRoles.
+* Database: 3 tabeller: user, roles, has_roles.
 * Ændre i UserDAO til den nye database.
 ## Specifikke opgager
 + Sæt postgreSQL database op
