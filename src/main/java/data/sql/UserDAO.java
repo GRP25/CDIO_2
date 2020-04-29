@@ -49,8 +49,7 @@ public class UserDAO implements IUserDAO {
             }
 
             for (UserDTO userTemp : users) {
-                sql = "SELECT has_roles.roles_id, roles.roles_title FROM has_roles  INNER JOIN roles ON has_roles.roles_id = roles.roles_id" + 
-                " WHERE user_id=" + userTemp.getId();
+                sql = "SELECT roles_title FROM has_roles  WHERE user_id=" + userTemp.getId();
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery(sql);
                 ArrayList<String> roleList = new ArrayList<>();
