@@ -35,7 +35,7 @@ public class Initiation implements InitDAO {
 
     @Override
     public void createNewGroupTable() {
-        String sql = "CREATE TABLE usergroup (\n" +
+        String sql = "CREATE TABLE roles (\n" +
                 "   group_id INT AUTO_INCREMENT,\n" +
                 "   group_title VARCHAR(36) NOT NULL, \n" +
                 "   PRIMARY KEY ( group_id ) \n" +
@@ -53,7 +53,7 @@ public class Initiation implements InitDAO {
 
     @Override
     public void createNewGroupRelationshipTable() {
-        String sql = "CREATE TABLE has_group (\n" +
+        String sql = "CREATE TABLE has_roles (\n" +
                 "   user_id INT NOT NULL,\n" +
                 "   group_id INT NOT NULL,\n" +
                 "   FOREIGN KEY (user_id) REFERENCES user(user_id),\n" +
