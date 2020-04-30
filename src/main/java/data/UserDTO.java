@@ -1,9 +1,11 @@
 package data;
 
+import javax.enterprise.context.RequestScoped;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@RequestScoped
 public class UserDTO {
     private int id;
     @NotNull
