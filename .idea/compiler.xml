@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CDIO_2" />
+        <module name="database" />
         <module name="cdio_2" />
         <module name="cdio_1" />
       </profile>
