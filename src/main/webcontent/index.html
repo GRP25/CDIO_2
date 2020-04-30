@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="script.js"></script>
     <meta charset="UTF-8">
     <title>CDIO2</title>
 </head>
@@ -12,18 +14,18 @@
         <img src="images/LogoPNG.png" id="DTULogo" alt="">
     </div>
 </header>
-<div class="loginScreen">
+<div class="loginContainer" id="loginScreen">
     <div class="loginHeader">
         <p id="loginText">Login</p>
 </div>
     <div class="inputForm">
-        <form id="vForm "action="">
+        <form id="vForm ">
             <div class="row">
                 <div class="textDisplay">
                     <label for="brugernavn" id="brugerlabel">Bruger navn:</label>
                 </div>
             <div class="inputFormat">
-                <input type="text" id="bNavn" name="brugernavn" placeholder="Tast brugernavn" onclick="formHandler(this.form)">
+                <input type="text" id="bNavn" name="brugernavn" placeholder="Tast brugernavn" >
             </div>
             </div>
             <div class="row">
@@ -31,18 +33,49 @@
                     <label for="password">Password</label>
                 </div>
                 <div class="inputFormat">
-                    <input type="text" id="pass" name="password" placeholder="Tast password">
+                    <input type="text" id="pass" name="kodeord" placeholder="Tast password">
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="login">
+                <input type="submit" onclick="formHandler()" value="login">
             </div>
         </form>
     </div>
 </div>
 
+<div class="showHide" id="sh">
+    <div class="optionsContainer" id="op">
+        <button type="button" class="optionsButton" id="createUser" onclick="createUser()">Create user</button>
+        <button type="button" class="optionsButton" id="updateUser" onclick="updateUser()">Update user </button>
+        <button type="button" class="optionsButton" id="getUser" onclick="getUser()">Get a user</button>
+        <button type="button" class="optionsButton" id="getUserList" onclick="listUser()">Get list of users</button>
+        <button type="button" class="optionsButton" id="deleteUser" onclick="deleteUser()">Delete user</button>
+    </div>
+</div>
+
+<div class="showHide" id="sr">
+    <div class="resultContainer" id="re">
+        <div class ="view" id="display">
+            <div class="createUser" id="user">
+                <p>name</p>
+            </div>
+            <div class="updateUser" id="update">
+                <p>id</p>
+            </div>
+            <div class ="getUser" id="get">
+                <p>id</p>
+            </div>
+            <div class="userList" id="list">
+
+            </div>
+            <div classs="deleteUser" id="dUser">
+                <p>id</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
-<script src="script.js"></script>
 </html>
 
 
