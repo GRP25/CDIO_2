@@ -7,7 +7,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
 
-@Path("/user/")
+@Path("UserResource")
 public class UserResource
 {
     UserService userService = new UserServiceImpl();
@@ -33,9 +33,6 @@ public class UserResource
     }
 
 
-    // When we return we will use @Produces(MediaType.APPLICATION_JSON)
-    // because we don't have object in the parameter therefore we don't need
-    // [@Consumes(MediaType.APPLICATION_JSON)]
     @Path("{userID}")
     @DELETE
     public void deleteUser(@PathParam( "userID" ) int userID) {
