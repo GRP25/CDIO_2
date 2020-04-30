@@ -10,7 +10,7 @@ body{
 }
 
 header{
-    background-color: red;
+    background-color: darkcyan;
 }
 
 #cdio {
@@ -19,9 +19,7 @@ header{
     font-size: 40px;
     color: wheat;
     font-family: 'Roboto Slab', serif;
-
 }
-
 
 .logo{
     text-align: right;
@@ -31,7 +29,6 @@ header{
 #DTULogo{
     max-height: 100px;
 }
-
 
 .loginContainer{
     margin: 20px auto;
@@ -110,6 +107,7 @@ input[type=submit]:hover {
 
 
 .showHide {
+    display: none;
 }
 .optionsContainer {
     margin: 20px auto auto auto;

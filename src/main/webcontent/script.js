@@ -20,22 +20,36 @@ $(document).ready(() => {
         }
     }
 
-
-
-
-
-
 function createUser() {
     $('#resultview').hide();
 
     //call function
-    $.ajax('java/sql/main', post)
+    $.ajax({url: 'java/data/main',
+        data: $('#form').serializeJSON(),
+        contentType: "application/json",
+        method: 'POST', 
+        success: function (data) {
+            $(".resultContainer").html(data);
+       },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    });
+    /*
+    Jeg har kigget på powerPoint slides fra lektion 11 omkring
+    REST og Javascript og det er hvad jeg kom frem til.
+
+    Kig videre på: data $('#from').serializeJSON()
+    Da det er her hvor dataen bliver loadet ind.
+     */
+
 
     //load data into view displayet to user
-    $('.createUser').load(data)
+    $('#createUser').load(data);
 
     //show container
-    $('createUser').show();
+    $('#user').show();
+
 }
 
 function updateUser() {
@@ -47,7 +61,7 @@ function getUser() {
 }
 
 function listUser() {
-
+        $('#list').show();
 }
 
 function deleteUser() {
@@ -57,3 +71,8 @@ function deleteUser() {
 function loadDatabase() {
 
 }
+
+/*
+Er der en funktion for meget eller mangler der en i
+html koden og derved også i CSS?
+ */
