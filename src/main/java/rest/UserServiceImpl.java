@@ -1,10 +1,9 @@
-package service;
+package rest;
 
 import data.IUserDAO;
 import data.UserDTO;
 import data.sql.UserDAO;
 
-import javax.xml.registry.infomodel.User;
 import java.util.ArrayList;
 
 public class UserServiceImpl  implements UserService{

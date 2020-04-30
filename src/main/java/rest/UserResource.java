@@ -1,8 +1,6 @@
-package resource;
+package rest;
 
 import data.UserDTO;
-import service.UserService;
-import service.UserServiceImpl;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
