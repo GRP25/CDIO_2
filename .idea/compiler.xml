@@ -9,6 +9,7 @@
         <module name="CDIO_2" />
         <module name="cdio_2" />
         <module name="cdio_1" />
+        <module name="CDIO_2" />
       </profile>
     </annotationProcessing>
   </component>
