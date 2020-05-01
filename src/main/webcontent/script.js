@@ -1,6 +1,7 @@
 
 $(document).ready(() => {
     loadDatabase();
+    $('#display').children().hide();
 });
 
 
@@ -24,8 +25,16 @@ $(document).ready(() => {
         createUser();
     });*/
 
+
+function prepareWindow (input,text) {
+    $('#display').children().hide();
+    $('#resultText').text(`${text}`)
+    $(`#`+ `${input}`).show();
+}
+
 function createUser() {
-    $('#resultview').hide();
+    $('#resultview').hide()
+    $('#user').show();
 
     //call function
     $.ajax({url: 'https://api.mama.sh/users',
