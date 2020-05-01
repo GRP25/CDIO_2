@@ -27,7 +27,7 @@ function createUser() {
     $.ajax({url: 'java/data/main',
         data: $('#form').serializeJSON(),
         contentType: "application/json",
-        method: 'POST', 
+        method: 'POST',
         success: function (data) {
             $(".resultContainer").html(data);
        },
@@ -43,7 +43,6 @@ function createUser() {
     Da det er her hvor dataen bliver loadet ind.
      */
 
-
     //load data into view displayet to user
     $('#createUser').load(data);
 
@@ -54,18 +53,64 @@ function createUser() {
 
 function updateUser() {
 
+    $.ajax({url: 'java/data/main',
+        data: $('#form').serializeJSON(),
+        contentType: "application/json",
+        method: 'PUT',
+        success: function (data) {
+            $(".resultContainer").html(data);
+        },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    });
 }
 
 function getUser() {
 
+    $.ajax({url: 'java/data/main',
+        data: $('#form').serializeJSON(),
+        contentType: "application/json",
+        method: 'GET',
+        success: function (data) {
+            $(".resultContainer").html(data);
+        },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    });
 }
 
 function listUser() {
-        $('#list').show();
+
+    $.ajax({url: 'java/data/main',
+        data: $('#form').serializeJSON(),
+        contentType: "application/json",
+        method: 'GET',
+        success: function (data) {
+            $(".resultContainer").html(data);
+        },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    });
+
+    $('#list').show();
 }
 
 function deleteUser() {
 
+    $.ajax({url: 'java/data/main',
+        data: $('#form').serializeJSON(),
+        contentType: "application/json",
+        method: 'DELETE',
+        success: function (data) {
+            $(".resultContainer").html(data);
+        },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    });
 }
 
 function loadDatabase() {
