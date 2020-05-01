@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>-->
+    <script src="jquery-3.1.1.js"></script>
     <script src="script.js"></script>
+    <script src="jquery.serialize-object.js"></script>
     <meta charset="UTF-8">
     <title>CDIO2</title>
 </head>
@@ -58,20 +60,80 @@
 <div class="showHide" id="sr">
     <div class="resultContainer" id="re">
         <div class ="view" id="display">
+
             <div class="createUser" id="user">
-                <p>name</p>
+                <div class="createUserForm">
+                    <form id="userForm">
+                        <div class="row">
+                            <div class="textDisplay">
+                                <label for="cpr" id="cprID"> CPR nummer: </label>
+                            </div>
+                            <div class="inputFormat">
+                                <input type="text" id="cpr" name="cpr" placeholder="Tast CPR nummer">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="textDisplay">
+                                <label for="name" id="nameID"> Fulde Navn: </label>
+                            </div>
+                            <div class="inputFormat">
+                                <input type="text" id="name" name="navn" placeholder="Tast dit navn">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="textDisplay">
+                                <label for="initials" id="initialsID"> Initialer: </label>
+                            </div>
+                            <div class="inputFormat">
+                                <input type="text" id="initials" name="initialer" placeholder="Tast initialer">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="textDisplay">
+                                <label for="userPassword" id="userPasswordID"> Password: </label>
+                            </div>
+                            <div class="inputFormat">
+                                <input type="text" id="userPassword" name="userPassword" placeholder="Tast dit password">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="textDisplay">
+                                <label for="role" id="rodeID"> Role: </label>
+                            </div>
+                            <div class="dropdown">
+                                <select name="roles" multiple="" class="roleSelection" id="role">
+                                    <option value="" disabled> Vælg Rolle:</option>
+                                    <option value="adim">Adim</option>
+                                    <option value="phamaceut">Phamaceut</option>
+                                    <option value="laborant">Laborant</option>
+                                    <option value="produktionsleder">Produktionsleder</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <input type="submit" onclick="createUser(this.form)" value="Submit">
+                        </div>
+
+                    </form>
+                </div>
             </div>
+
             <div class="updateUser" id="update">
-                <p>id</p>
+
             </div>
             <div class ="getUser" id="get">
-                <p>id</p>
+
             </div>
             <div class="userList" id="list">
 
             </div>
             <div classs="deleteUser" id="dUser">
-                <p>id</p>
+
             </div>
         </div>
     </div>

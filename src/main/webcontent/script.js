@@ -29,7 +29,7 @@ function createUser() {
 
     //call function
     $.ajax({url: 'https://api.mama.sh/users',
-        //data: $('#form').serializeJSON(),
+        data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'POST',
         success: function (data) {
@@ -62,12 +62,14 @@ function updateUser() {
         contentType: "application/json",
         method: 'PUT',
         success: function (data) {
-            $(".resultContainer").html(data);
+            $(".resultContainer").append(data);
         },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
         }
     });
+
+    $('#updateUser').show();
 }
 
 function getUser() {
