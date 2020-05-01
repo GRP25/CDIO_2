@@ -166,6 +166,35 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    @Override
+    public boolean exists(int id) {
+        String sql = "SELECT from user WHERE user_id = ?";
+        try (
+                Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean exists(long cpr) {
+        String sql = "SELECT from user WHERE user_cpr = ?";
+        try (
+                Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setLong(1, cpr);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
     private ArrayList<String> get_user_roles(int id, Statement stmt) throws SQLException{
         String sql = "SELECT roles_title FROM has_roles WHERE user_id=" + id;
         ResultSet rs = stmt.executeQuery(sql);

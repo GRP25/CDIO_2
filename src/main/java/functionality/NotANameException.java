@@ -1,4 +1,4 @@
-package funcionalitylayer;
+package functionality;
 
 public class NotANameException extends Exception {
     NotANameException(String message) {
