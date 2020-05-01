@@ -14,7 +14,10 @@ header{
 }
 
 #cdio {
-    left: 45%;
+    top: 35px;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     position: absolute;
     font-size: 40px;
     color: wheat;

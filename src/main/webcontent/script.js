@@ -20,16 +20,20 @@ $(document).ready(() => {
         }
     }
 
+    /*$('.createUser').on('click',function () {
+        createUser();
+    });*/
+
 function createUser() {
     $('#resultview').hide();
 
     //call function
-    $.ajax({url: 'java/data/main',
-        data: $('#form').serializeJSON(),
+    $.ajax({url: 'https://api.mama.sh/users',
+        //data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'POST',
         success: function (data) {
-            $(".resultContainer").html(data);
+            $(".resultContainer").append(data);
        },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -53,7 +57,7 @@ function createUser() {
 
 function updateUser() {
 
-    $.ajax({url: 'java/data/main',
+    $.ajax({url: 'https://api.mama.sh/users',
         data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'PUT',
@@ -68,7 +72,7 @@ function updateUser() {
 
 function getUser() {
 
-    $.ajax({url: 'java/data/main',
+    $.ajax({url: 'https://api.mama.sh/users',
         data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'GET',
@@ -83,7 +87,7 @@ function getUser() {
 
 function listUser() {
 
-    $.ajax({url: 'java/data/main',
+    $.ajax({url: 'https://api.mama.sh/users',
         data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'GET',
@@ -100,7 +104,7 @@ function listUser() {
 
 function deleteUser() {
 
-    $.ajax({url: 'java/data/main',
+    $.ajax({url: 'https://api.mama.sh/users',
         data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'DELETE',
