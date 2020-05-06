@@ -153,17 +153,6 @@ function loadDatabase() {
 
 }
 
-function printerUser(user) {
-
-    $('.showResult').html(
-        `
-        CPR nummer: ${user.cpr} <br>
-        Fulde Navn: ${user.name}<br>
-        Initialer: ${user.initials}<br>
-        Roller: ${user.roles}<br>
-        `
-    )
-}
 
 /*
 Er der en funktion for meget eller mangler der en i
