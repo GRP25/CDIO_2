@@ -32,17 +32,23 @@ function prepareWindow (input,text) {
     $(`#`+ `${input}`).show();
 }
 
-function createUser() {
-    $('#resultview').hide()
-    $('#user').show();
 
-    //call function
+
+function createUser() {
+    event.preventDefault();
+    const user = {
+        cpr: $('#cpr').val(),
+        name: $('#c_name').val(),
+        initials: $('#c_initials').val(),
+        password: $('#c_userPassword').val(),
+        roles: $('#role').val()
+    };
     $.ajax({url: 'https://api.mama.sh/users',
-        data: $('#form').serializeJSON(),
-        contentType: "application/json",
         method: 'POST',
-        success: function (data) {
-            $(".resultContainer").append(data);
+        data: JSON.stringify(user),
+        contentType: "application/json",
+        success: function (response) {
+            $(".resultContainer").append(response);
        },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -57,10 +63,10 @@ function createUser() {
      */
 
     //load data into view displayet to user
-    $('#createUser').load(data);
+    //$('#createUser').load(data);
 
     //show container
-    $('#user').show();
+   // $('#user').show();
 
 }
 
@@ -135,4 +141,36 @@ function loadDatabase() {
 /*
 Er der en funktion for meget eller mangler der en i
 html koden og derved også i CSS?
+const test = $('#userForm').submit(function(data) {
+    //const data = $('form #userForm').serializeArray();
+    let form = $(this);
+    alert(form);
+    console.log('form' + form);
+    let aData = convertArrayToObject(data, 'name');
+    console.log('this is data' + aData);
+    //call function
+    $.ajax({
+        url: 'https://api.mama.sh/users',
+        method: 'POST',
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (response) {
+            alert(response);
+            $(".resultContainer").append(data);
+        },
+        error: function (jqXHR, text, error) {
+            alert(jqXHR.status + text + error);
+        }
+    })
+});
  */
+
+const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+        return {
+            ...obj,
+            [item[key]]: item,
+        };
+    }, initialValue);
+};
