@@ -90,13 +90,22 @@ function updateUser() {
 }
 
 function getUser() {
+    event.preventDefault();
 
-    $.ajax({url: 'https://api.mama.sh/users',
-        data: $('#form').serializeJSON(),
-        contentType: "application/json",
+    const user = {
+        userID: $('#userID').val()
+    };
+
+    $.ajax({url:`https://api.mama.sh/users/${user.userID}`,
         method: 'GET',
-        success: function (data) {
-            $(".showResult").html(data);
+        //data: JSON.stringify(user),
+        //contentType: "application/json",
+        datatype: "json",
+        success: function (response) {
+            $('.getUser').hide();
+            printerUser(response);
+            $('.showResult').show();
+
         },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -123,13 +132,16 @@ function listUser() {
 }
 
 function deleteUser() {
+    event.preventDefault();
 
-    $.ajax({url: 'https://api.mama.sh/users',
-        data: $('#form').serializeJSON(),
-        contentType: "application/json",
+    const user={
+        dID: $('#deleteID').val()
+    };
+
+    $.ajax({url: `https://api.mama.sh/users/${user.dID}`,
         method: 'DELETE',
-        success: function (data) {
-            $(".resultContainer").html(data);
+        success: function (response) {
+            $(".resultContainer").append(response);
         },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -139,6 +151,18 @@ function deleteUser() {
 
 function loadDatabase() {
 
+}
+
+function printerUser(user) {
+
+    $('.showResult').html(
+        `
+        CPR nummer: ${user.cpr} <br>
+        Fulde Navn: ${user.name}<br>
+        Initialer: ${user.initials}<br>
+        Roller: ${user.roles}<br>
+        `
+    )
 }
 
 /*
