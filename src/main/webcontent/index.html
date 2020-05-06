@@ -80,28 +80,28 @@
 
                         <div class="row">
                             <div class="textDisplay">
-                                <label for="name" id="nameID"> Fulde Navn: </label>
+                                <label for="c_name" id="nameID"> Fulde Navn: </label>
                             </div>
                             <div class="inputFormat">
-                                <input type="text" id="name" name="navn" placeholder="Tast dit navn">
+                                <input type="text" id="c_name" name="navn" placeholder="Tast dit navn">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="textDisplay">
-                                <label for="initials" id="initialsID"> Initialer: </label>
+                                <label for="c_initials" id="initialsID"> Initialer: </label>
                             </div>
                             <div class="inputFormat">
-                                <input type="text" id="initials" name="initialer" placeholder="Tast initialer">
+                                <input type="text" id="c_initials" name="initialer" placeholder="Tast initialer">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="textDisplay">
-                                <label for="userPassword" id="userPasswordID"> Password: </label>
+                                <label for="c_userPassword" id="userPasswordID"> Password: </label>
                             </div>
                             <div class="inputFormat">
-                                <input type="text" id="userPassword" name="userPassword" placeholder="Tast dit password">
+                                <input type="text" id="c_userPassword" name="userPassword" placeholder="Tast dit password">
                             </div>
                         </div>
 
@@ -112,17 +112,17 @@
                             <div class="dropdown">
                                 <select name="roles" multiple="" class="roleSelection" id="role">
                                     <option value="" disabled> Vælg Rolle/Roller:</option>
-                                    <option value="adim">Admin</option>
-                                    <option value="phamaceut">Phamaceut</option>
-                                    <option value="laborant">Laborant</option>
-                                    <option value="produktionsleder">Produktionsleder</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Phamaceut">Phamaceut</option>
+                                    <option value="Laborant">Laborant</option>
+                                    <option value="Produktionsleder">Produktionsleder</option>
                                 </select>
                                 <span id="ctrlNede">Hold ctrl nede for at vælge flere</span>
                             </div>
                         </div>
 
                         <div class="row">
-                            <input type="submit" onclick="" value="Submit">
+                            <input type="submit" onclick="createUser()" value="Submit">
                         </div>
 
                     </form>
