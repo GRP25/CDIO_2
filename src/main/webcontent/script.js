@@ -5,26 +5,20 @@ $(document).ready(() => {
 });
 
 
-    function formHandler() {
-        event.preventDefault();
+function formHandler() {
+    event.preventDefault();
 
-        let password = $('#pass').val();
-        let username = $('#bNavn').val();
+    let password = $('#pass').val();
+    let username = $('#bNavn').val();
 
-        if(password == 'test' && username == 'test') {
-            $('#loginScreen').hide();
-            $('#sh').show();
-            $('#sr').show();
-        } else {
-            alert("Wrong username and/or password");
-
+    if(password == 'test' && username == 'test') {
+        $('#loginScreen').hide();
+        $('#sh').show();
+        $('#sr').show();
+    } else {
+        alert("Wrong username and/or password");
         }
     }
-
-    /*$('.createUser').on('click',function () {
-        createUser();
-    });*/
-
 
 function prepareWindow (input,text) {
     $('#display').children().hide();
@@ -48,7 +42,15 @@ function createUser() {
         data: JSON.stringify(user),
         contentType: "application/json",
         success: function (response) {
-            $(".resultContainer").append(response);
+            /*
+            Hide container -
+            empty result container
+            input response into result container
+            Show result container
+             */
+            $('.createUser').hide();
+            $(".showResult").html(`<p> User ${user.name} added </p>`);
+            $('.showResult').show();
        },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -94,7 +96,7 @@ function getUser() {
         contentType: "application/json",
         method: 'GET',
         success: function (data) {
-            $(".resultContainer").html(data);
+            $(".showResult").html(data);
         },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);
@@ -105,11 +107,12 @@ function getUser() {
 function listUser() {
 
     $.ajax({url: 'https://api.mama.sh/users',
-        data: $('#form').serializeJSON(),
         contentType: "application/json",
         method: 'GET',
-        success: function (data) {
-            $(".resultContainer").html(data);
+        success: function () {
+            $('#display').children().hide();
+            $(".showResult").html(data);
+            $(".showResult").show()
         },
         error: function (jqXHR, text, error) {
             alert(jqXHR.status + text + error);

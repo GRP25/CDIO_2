@@ -1,0 +1,76 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name=viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect to API</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css.css" />
+    <link rel="stylesheet" type="text/css" href="check.css" />
+    <link rel="stylesheet" type="text/css" href="modal.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <style>
+      #info {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="submit" id="get" value="LIST USERS" />
+    <input type="submit" id="crbtn" value="CREATE USER" />
+
+    <!-- "The list" med alle brugere -->
+    <div id="root">
+      <table id="oot"></table>
+    </div>
+    <div id="myModal" class="modal">
+      <!-- Create/Update user form -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <label for="name">Name:</label>
+        <input value="" type="text" id="name" />
+        <label for="cpr">CPR:</label>
+        <input value="" type="text" id="cpr" />
+        <label for="initials">Initials:</label>
+        <input type="text" id="initials" />
+        <label for="password">Password:</label>
+        <input value="" type="password" id="password" />
+
+        <label class="container"
+          >Admin
+          <input class="roles" type="checkbox" id="Admin" value="Admin" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="container"
+          >Laborant
+          <input class="roles" type="checkbox" id="Laborant" value="Laborant" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="container"
+          >Produktionsleder
+          <input
+            class="roles"
+            type="checkbox"
+            id="Produktionsleder"
+            value="Produktionsleder"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <label class="container"
+          >Pharmaceut
+          <input
+            class="roles"
+            type="checkbox"
+            id="Pharmaceut"
+            value="Pharmaceut"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <input type="submit" id="save" value="" />
+        <input type="submit" id="modal-close" value="CLOSE" />
+      </div>
+    </div>
+  </body>
+</html>

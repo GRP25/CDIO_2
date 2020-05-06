@@ -41,12 +41,16 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(UserDTO user) {
 
+        if (userDAO.exists(user.getCpr())){
+            return Response.status(Response.Status.NOT_FOUND).entity(user).build();
+        }
+
         try {
             nameValidator(nameConversion(user.getName()));
             cprValidator(cprConversion(user.getCpr()));
             passwordValidator(user.getName(),user.getPassword());
         } catch (NotANameException | NotACPRException | NotAValidPasswordException e) {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getMessage()).build();
+            return Response.ok(e.getMessage()).build();
         }
 
         userDAO.createUser(user);
@@ -54,7 +58,7 @@ public class UserResource {
                 .path("/{user_id}")
                 .resolveTemplate("user_id", user.getId())
                 .build();
-        return Response.created(loaction).build();
+        return Response.created(loaction).entity(user).build();
     }
 
     @PUT
