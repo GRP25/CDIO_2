@@ -29,6 +29,8 @@ function prepareWindow (input,text) {
 
 
 function createUser() {
+    document.getElementById("loaderID").style.display="block";
+
     event.preventDefault();
     const user = {
         cpr: $('#cpr').val(),
@@ -48,11 +50,13 @@ function createUser() {
             input response into result container
             Show result container
              */
+            document.getElementById("loaderID").style.display="none";
             $('.createUser').hide();
             $(".showResult").html(`<p> User ${user.name} added </p>`);
             $('.showResult').show();
        },
         error: function (jqXHR, text, error) {
+            document.getElementById("loaderID").style.display="none";
             alert(jqXHR.status + text + error);
         }
     });
@@ -89,8 +93,16 @@ function updateUser() {
     $('#updateUser').show();
 }
 
+/*$(document).ready(function () {
+    $("#testknap").click(()=>{
+        document.getElementById("loaderID").style.display="block";
+    });
+});*/
+
+
 function getUser() {
     event.preventDefault();
+    document.getElementById("loaderID").style.display="block";
 
     const user = {
         userID: $('#userID').val()
