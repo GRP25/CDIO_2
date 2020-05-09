@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 
 
-@RequestScoped
 public interface IUserDAO{
     UserDTO getUser(int userID);
     void updateUser(UserDTO user);
