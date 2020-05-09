@@ -39,7 +39,7 @@ function createUser() {
         password: $('#c_userPassword').val(),
         roles: $('#role').val()
     };
-    $.ajax({url: 'https://api.mama.sh/users',
+    $.ajax({url: 'https://api.mama.sh',
         method: 'POST',
         data: JSON.stringify(user),
         contentType: "application/json",
@@ -108,18 +108,18 @@ function getUser() {
         userID: $('#userID').val()
     };
 
-    $.ajax({url:`https://api.mama.sh/users/${user.userID}`,
+    $.ajax({url:`https://api.mama.sh/${user.userID}`,
         method: 'GET',
-        //data: JSON.stringify(user),
-        //contentType: "application/json",
         datatype: "json",
         success: function (response) {
+            document.getElementById("loaderID").style.display="none";
             $('.getUser').hide();
             printerUser(response);
             $('.showResult').show();
 
         },
         error: function (jqXHR, text, error) {
+            document.getElementById("loaderID").style.display="none";
             alert(jqXHR.status + text + error);
         }
     });
@@ -145,17 +145,23 @@ function listUser() {
 
 function deleteUser() {
     event.preventDefault();
+    document.getElementById("loaderID").style.display="block";
 
     const user={
         dID: $('#deleteID').val()
     };
 
-    $.ajax({url: `https://api.mama.sh/users/${user.dID}`,
+    $.ajax({url: `https://api.mama.sh/${user.dID}`,
         method: 'DELETE',
         success: function (response) {
+            document.getElementById("loaderID").style.display="none";
             $(".resultContainer").append(response);
+            $('.deleteUser').hide();
+            $(".showResult").html(`<p> User deleted </p>`);
+            $('.showResult').show();
         },
         error: function (jqXHR, text, error) {
+            document.getElementById("loaderID").style.display="none";
             alert(jqXHR.status + text + error);
         }
     });
@@ -165,6 +171,16 @@ function loadDatabase() {
 
 }
 
+function printerUser(user) {
+    $('.showResult').html(
+        `
+        CPR nummer: ${user.cpr}<br>
+        Fulde Navn: ${user.name}<br>
+        Initialer: ${user.initials}<br>
+        Roller: ${user.roles}<br>
+        `
+    )
+}
 
 /*
 Er der en funktion for meget eller mangler der en i
