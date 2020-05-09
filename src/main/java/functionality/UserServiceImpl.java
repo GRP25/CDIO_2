@@ -1,11 +1,13 @@
-package rest;
+package functionality;
 
 import data.IUserDAO;
 import data.UserDTO;
 import data.sql.UserDAO;
 
+import javax.enterprise.context.RequestScoped;
 import java.util.ArrayList;
 
+@RequestScoped
 public class UserServiceImpl  implements UserService{
 
 

@@ -1,4 +1,4 @@
-package rest;
+package functionality;
 
 import data.UserDTO;
 

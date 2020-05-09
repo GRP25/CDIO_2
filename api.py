@@ -1,7 +1,7 @@
 import requests
 import json
 
-link = 'http://127.0.0.1:8080/db/api/users'
+link = 'https://api.mama.sh'
 
 def list_users():
     r = requests.get(link)
@@ -36,8 +36,8 @@ user = {
     ]
 }
 
-create_user(user)
+#create_user(user)
 #list_users()
-#delete_user(6)
+delete_user(1)
 #get_user(1)
 #update_user(1,user)

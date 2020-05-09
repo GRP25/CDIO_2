@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="database" />
         <module name="CDIO_2.0" />
+        <module name="CDIO_2" />
         <module name="cdio_1" />
       </profile>
     </annotationProcessing>

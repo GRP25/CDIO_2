@@ -1,10 +1,10 @@
-package functionality;
+package functionality.exceptions;
 
 import data.IUserDAO;
 import data.UserDTO;
 import data.sql.UserDAO;
 
-import java.util.ArrayList;
+import static functionality.Conversion.nameConversion;
 
 public class Validation {
     private static boolean hasStr(String str1, String str2) {
@@ -28,7 +28,7 @@ public class Validation {
     }
 
     private static boolean lengthValidator(int min, int max, String str) {
-        return str.length() <= min && str.length() >= max;
+        return str.length() < min || str.length() > max;
     }
 
     private static boolean isDateValidator(String date) {
@@ -81,5 +81,10 @@ public class Validation {
             throw new NotAValidPasswordException("Your pass has to contain at least one digit");
         else
             return password;
+    }
+    public static void validateUser(UserDTO user) throws UserException{
+        nameValidator(nameConversion(user.getName()));
+        cprValidator(String.valueOf(user.getCpr()));
+        passwordValidator(user.getName(),user.getPassword());
     }
 }
