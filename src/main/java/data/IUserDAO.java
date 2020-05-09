@@ -1,10 +1,9 @@
 package data;
 
-//import data.memory.UserDAO;
-
 import javax.enterprise.context.RequestScoped;
 import java.util.ArrayList;
-import java.util.List;
+
+
 
 @RequestScoped
 public interface IUserDAO{
@@ -14,5 +13,5 @@ public interface IUserDAO{
     void deleteUser(int userID);
     ArrayList<UserDTO> getUserList();
     boolean exists(int id);
-    boolean exists(long cpr);
+    boolean exists(String cpr);
 }

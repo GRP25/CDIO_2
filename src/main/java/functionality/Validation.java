@@ -1,10 +1,6 @@
 package functionality;
 
-import data.IUserDAO;
-import data.UserDTO;
 import data.sql.UserDAO;
-
-import java.util.ArrayList;
 
 public class Validation {
     private static boolean hasStr(String str1, String str2) {
@@ -28,7 +24,7 @@ public class Validation {
     }
 
     private static boolean lengthValidator(int min, int max, String str) {
-        return str.length() <= min && str.length() >= max;
+        return str.length() < min || str.length() > max;
     }
 
     private static boolean isDateValidator(String date) {
@@ -36,28 +32,27 @@ public class Validation {
     }
 
     public static String cprValidator(String cpr) throws NotACPRException {
-        IUserDAO db = new UserDAO();
-        System.out.println(cpr);
-        System.out.println(cpr.length());
+        UserDAO db = new UserDAO();
         if (cpr.length() != 10)
             throw new NotACPRException("This is not a cpr number it does not have the right amount of digits" );
 
         if (!isDateValidator(cpr.substring(0, 6)))
             throw new NotACPRException("This cpr does not contain a valid date");
 
-        long               num   = Long.parseLong(cpr);
-        if (db.exists(num)) {
+        if (db.exists(cpr)) {
             throw new NotACPRException("This cpr already exists in the database");
         }
         return cpr;
     }
 
     public static String nameValidator(String name) throws NotANameException {
+        if (name.split(" ").length != 2)
+            throw new NotANameException("You need to put in a first and a last name!");
         if (hasDigit(name))
             throw new NotANameException("Names can not have numbers. Please put in a real name!");
         if (hasSpecial(name))
             throw new NotANameException("Names can not have special characters. Please put in a real name!");
-        if (lengthValidator(1, 25, name))
+        if (lengthValidator(2, 25, name))
             throw new NotANameException("The name can only be between 2 and 25 characters");
         else
             return name;

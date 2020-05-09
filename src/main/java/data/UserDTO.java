@@ -15,10 +15,10 @@ public class UserDTO {
     private String password;
     private ArrayList<String> roles;
     @NotNull
-    private long cpr;
+    private String cpr;
 
 
-    public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, long cpr) {
+    public UserDTO(String name, String initials, String password, ArrayList<String> roles, int id, String cpr) {
         this.id = id;
         this.name = name;
         this.initials = initials;
@@ -46,7 +46,7 @@ public class UserDTO {
     public int getId() {
         return id;
     }
-    public long getCpr() {
+    public String getCpr() {
         return cpr;
     }
     public void setName(String name) {
@@ -64,7 +64,7 @@ public class UserDTO {
     public void setId(int id) {
         this.id = id;
     }
-    public void setCpr(long cpr) {
+    public void setCpr(String cpr) {
         this.cpr = cpr;
     }
     public String toString(){

@@ -1,5 +1,4 @@
 import data.sql.UserDAO;
-import data.IUserDAO;
 import data.UserDTO;
 import functionality.NotACPRException;
 import functionality.NotANameException;
@@ -8,7 +7,6 @@ import functionality.NotAValidPasswordException;
 import static functionality.Validation.*;
 import static functionality.Conversion.*;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,8 +18,7 @@ import java.net.URI;
 @RequestScoped
 public class UserResource {
 
-    @EJB
-    private IUserDAO userDAO = new UserDAO();
+    private UserDAO userDAO = new UserDAO();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,39 +36,31 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(UserDTO user) {
+    public Response create(UserDTO user) throws NotANameException, NotACPRException, NotAValidPasswordException {
 
         if (userDAO.exists(user.getCpr())){
-            return Response.status(Response.Status.NOT_FOUND).entity(user).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Error: A user with this pwd exists").build();
         }
 
-        try {
-            nameValidator(nameConversion(user.getName()));
-            cprValidator(cprConversion(user.getCpr()));
-            passwordValidator(user.getName(),user.getPassword());
-        } catch (NotANameException | NotACPRException | NotAValidPasswordException e) {
-            return Response.ok(e.getMessage()).build();
-        }
+        nameValidator(nameConversion(user.getName()));
+        cprValidator(String.valueOf(user.getCpr()));
+        passwordValidator(user.getName(),user.getPassword());
 
         userDAO.createUser(user);
         URI loaction = UriBuilder.fromResource(UserResource.class)
                 .path("/{user_id}")
                 .resolveTemplate("user_id", user.getId())
                 .build();
-        return Response.created(loaction).entity(user).build();
+        return Response.created(loaction).build();
     }
 
     @PUT
     @Path("/{user_id}")
-    public Response update(@PathParam("user_id") int userId, UserDTO user) {
+    public Response update(@PathParam("user_id") int userId, UserDTO user) throws NotANameException, NotACPRException, NotAValidPasswordException {
 
-        try {
-            nameValidator(nameConversion(user.getName()));
-            cprValidator(cprConversion(user.getCpr()));
-            passwordValidator(user.getName(),user.getPassword());
-        } catch (NotANameException | NotACPRException | NotAValidPasswordException e) {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getMessage()).build();
-        }
+        nameValidator(nameConversion(user.getName()));
+        cprValidator(String.valueOf(user.getCpr()));
+        passwordValidator(user.getName(),user.getPassword());
 
         userDAO.updateUser(user);
 
