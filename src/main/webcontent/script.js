@@ -122,7 +122,7 @@ function getUser() {
 
 function listUser() {
 	$.ajax({
-		url: "https://api.mama.sh/users",
+		url: "https://api.mama.sh/",
 		contentType: "application/json",
 		method: "GET",
 		success: function (response) {
