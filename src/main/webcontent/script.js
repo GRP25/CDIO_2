@@ -25,6 +25,8 @@ function prepareWindow(input, text) {
 }
 
 function createUser() {
+	document.getElementById("loaderID").style.display = "block";
+
 	event.preventDefault();
 	const user = {
 		cpr: $("#cpr").val(),
@@ -34,7 +36,7 @@ function createUser() {
 		roles: $("#role").val(),
 	};
 	$.ajax({
-		url: "https://api.mama.sh/users",
+		url: "https://api.mama.sh",
 		method: "POST",
 		data: JSON.stringify(user),
 		contentType: "application/json",
@@ -45,11 +47,13 @@ function createUser() {
             input response into result container
             Show result container
              */
+			document.getElementById("loaderID").style.display = "none";
 			$(".createUser").hide();
 			$(".showResult").html(`<p> User ${user.name} added </p>`);
 			$(".showResult").show();
 		},
 		error: function (jqXHR, text, error) {
+			document.getElementById("loaderID").style.display = "none";
 			alert(jqXHR.status + text + error);
 		},
 	});
@@ -85,16 +89,32 @@ function updateUser() {
 	$("#updateUser").show();
 }
 
+/*$(document).ready(function () {
+    $("#testknap").click(()=>{
+        document.getElementById("loaderID").style.display="block";
+    });
+});*/
+
 function getUser() {
+	event.preventDefault();
+	document.getElementById("loaderID").style.display = "block";
+
+	const user = {
+		userID: $("#userID").val(),
+	};
+
 	$.ajax({
-		url: "https://api.mama.sh/users",
-		data: $("#form").serializeJSON(),
-		contentType: "application/json",
+		url: `https://api.mama.sh/${user.userID}`,
 		method: "GET",
-		success: function (data) {
-			$(".showResult").html(data);
+		datatype: "json",
+		success: function (response) {
+			document.getElementById("loaderID").style.display = "none";
+			$(".getUser").hide();
+			printerUser(response);
+			$(".showResult").show();
 		},
 		error: function (jqXHR, text, error) {
+			document.getElementById("loaderID").style.display = "none";
 			alert(jqXHR.status + text + error);
 		},
 	});
@@ -130,21 +150,42 @@ function listUser() {
 }
 
 function deleteUser() {
+	event.preventDefault();
+	document.getElementById("loaderID").style.display = "block";
+
+	const user = {
+		dID: $("#deleteID").val(),
+	};
+
 	$.ajax({
-		url: "https://api.mama.sh/users",
-		data: $("#form").serializeJSON(),
-		contentType: "application/json",
+		url: `https://api.mama.sh/${user.dID}`,
 		method: "DELETE",
-		success: function (data) {
-			$(".resultContainer").html(data);
+		success: function (response) {
+			document.getElementById("loaderID").style.display = "none";
+			$(".resultContainer").append(response);
+			$(".deleteUser").hide();
+			$(".showResult").html(`<p> User deleted </p>`);
+			$(".showResult").show();
 		},
 		error: function (jqXHR, text, error) {
+			document.getElementById("loaderID").style.display = "none";
 			alert(jqXHR.status + text + error);
 		},
 	});
 }
 
 function loadDatabase() {}
+
+function printerUser(user) {
+	$(".showResult").html(
+		`
+        CPR nummer: ${user.cpr}<br>
+        Fulde Navn: ${user.name}<br>
+        Initialer: ${user.initials}<br>
+        Roller: ${user.roles}<br>
+        `
+	);
+}
 
 /*
 Er der en funktion for meget eller mangler der en i

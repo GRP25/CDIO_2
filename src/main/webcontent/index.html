@@ -50,7 +50,7 @@
 <div class="showHide" id="sh">
     <div class="optionsContainer" id="op">
         <div class="optionHeader">
-            <p id="optionText">Options</p>
+            <p id="optionText">Menu</p>
         </div>
 
         <button type="button" class="optionsButton" id="createUser" onclick="prepareWindow('user', 'Lav bruger')">Create user</button>
@@ -58,6 +58,7 @@
         <button type="button" class="optionsButton" id="getUser" onclick="prepareWindow('get', 'Vis bruger')">Get a user</button>
         <button type="button" class="optionsButton" id="getUserList" onclick="prepareWindow('gUserList', 'Vis liste af brugere'); listUser()">Get list of users</button>
         <button type="button" class="optionsButton" id="deleteUser" onclick="prepareWindow('delete', 'Slet bruger')">Delete user</button>
+        <!--<button type="button" class="optionsButton" id="testknap" >test knap</button>-->
     </div>
 </div>
 
@@ -199,10 +200,10 @@
                                 <label for="userID" id="uID">Bruger ID</label>
                             </div>
                             <div class="inputFormat">
-                                <input type="text" id="userID" name="id" placeholder="Tast brugerens id">
+                                <input type="text" id="userID" name="id" placeholder="Tast brugerens ID">
                             </div>
                             <div class="row">
-                                <input type="submit" onclick ="getUser(this.form.id)" value="Søg">
+                                <input type="submit" onclick ="getUser()" value="Søg">
                             </div>
                         </div>
                     </form>
@@ -222,7 +223,7 @@
                                 <input type="text" id="deleteID" name="id" placeholder="Tast brugerens id">
                             </div>
                             <div class="row">
-                                <input type="submit" onclick ="deleteUser(this.form.id)" value="Slet">
+                                <input type="submit" onclick ="deleteUser()" value="Slet">
                             </div>
                         </div>
                     </form>
@@ -234,6 +235,20 @@
         </div>
     </div>
 </div>
+
+<div class="loading-bg" id="loaderID">
+    <div class="loading">
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+        <div class="object"></div>
+    </div>
+</div>
+
 
 </body>
 </html>
