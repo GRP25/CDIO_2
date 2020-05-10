@@ -13,5 +13,5 @@ public interface IUserDAO{
     void deleteUser(int userID);
     ArrayList<UserDTO> getUserList();
     boolean exists(int id);
-    boolean exists(long cpr);
+    boolean exists(String cpr);
 }

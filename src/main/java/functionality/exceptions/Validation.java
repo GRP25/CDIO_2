@@ -4,6 +4,7 @@ import data.IUserDAO;
 import data.UserDTO;
 import data.sql.UserDAO;
 
+import static functionality.Conversion.cprConversion;
 import static functionality.Conversion.nameConversion;
 
 public class Validation {
@@ -45,8 +46,7 @@ public class Validation {
         if (!isDateValidator(cpr.substring(0, 6)))
             throw new NotACPRException("This cpr does not contain a valid date");
 
-        long               num   = Long.parseLong(cpr);
-        if (db.exists(num)) {
+        if (db.exists(cpr)) {
             throw new NotACPRException("This cpr already exists in the database");
         }
         return cpr;
@@ -84,7 +84,7 @@ public class Validation {
     }
     public static void validateUser(UserDTO user) throws UserException{
         nameValidator(nameConversion(user.getName()));
-        cprValidator(String.valueOf(user.getCpr()));
+        cprValidator(user.getCpr());
         passwordValidator(user.getName(),user.getPassword());
     }
 }

@@ -1,63 +1,84 @@
 $(document).ready(() => {
-	loadDatabase();
-	$("#display").children().hide();
+  loadDatabase();
+  $("#display").children().hide();
 });
 
 function formHandler() {
-	event.preventDefault();
+  event.preventDefault();
 
-	let password = $("#pass").val();
-	let username = $("#bNavn").val();
+  let password = $("#pass").val();
+  let username = $("#bNavn").val();
 
-	if (password == "test" && username == "test") {
-		$("#loginScreen").hide();
-		$("#sh").show();
-		$("#sr").show();
-	} else {
-		alert("Wrong username and/or password");
-	}
+  if (password == "test" && username == "test") {
+    $("#loginScreen").hide();
+    $("#sh").show();
+    $("#sr").show();
+  } else {
+    alert("Wrong username and/or password");
+  }
 }
 
 function prepareWindow(input, text) {
-	$("#display").children().hide();
-	$("#resultText").text(`${text}`);
-	$(`#` + `${input}`).show();
+  $("#display").children().hide();
+  $("#resultText").text(`${text}`);
+  $(`#` + `${input}`).show();
 }
 
 function createUser() {
-	document.getElementById("loaderID").style.display = "block";
+  $(".form").each(function (e, i) {
+    i.style.border = "2px solid black";
+  });
+  $(".error").each(function (e, i) {
+    console.log(e);
+    console.log(i);
+    i.innerHTML = "";
+  });
+  document.getElementById("loaderID").style.display = "block";
 
-	event.preventDefault();
-	const user = {
-		cpr: $("#cpr").val(),
-		name: $("#c_name").val(),
-		initials: $("#c_initials").val(),
-		password: $("#c_userPassword").val(),
-		roles: $("#role").val(),
-	};
-	$.ajax({
-		url: "https://api.mama.sh",
-		method: "POST",
-		data: JSON.stringify(user),
-		contentType: "application/json",
-		success: function (response) {
-			/*
+  event.preventDefault();
+  const user = {
+    cpr: $("#cpr").val(),
+    name: $("#c_name").val(),
+    initials: $("#c_initials").val(),
+    password: $("#c_userPassword").val(),
+    roles: $("#role").val(),
+  };
+  $.ajax({
+    url: "https://api.mama.sh",
+    method: "POST",
+    data: JSON.stringify(user),
+    contentType: "application/json",
+    success: function (response) {
+      /*
             Hide container -
             empty result container
             input response into result container
             Show result container
              */
-			document.getElementById("loaderID").style.display = "none";
-			$(".createUser").hide();
-			$(".showResult").html(`<p> User ${user.name} added </p>`);
-			$(".showResult").show();
-		},
-		error: function (jqXHR, text, error) {
-			document.getElementById("loaderID").style.display = "none";
-			alert(jqXHR.status + text + error);
-		},
-	});
-	/*
+      document.getElementById("loaderID").style.display = "none";
+      $(".createUser").hide();
+      $(".showResult").html(`<p> User ${user.name} added </p>`);
+      $(".showResult").show();
+    },
+    error: function (data, text, error) {
+      document.getElementById("loaderID").style.display = "none";
+      var resp = data.responseJSON;
+      if (resp.errorCode == 3) {
+        document.getElementById("c_name").style.border = "2px solid red";
+        $("#c_name_msg").html(resp.errorMessage);
+      }
+      if (resp.errorCode == 2) {
+        document.getElementById("cpr").style.border = "2px solid red";
+        $("#c_cpr_msg").html(resp.errorMessage);
+      }
+      if (resp.errorCode == 1) {
+        document.getElementById("c_userPassword").style.border =
+          "2px solid red";
+        $("#c_pass_msg").html(resp.errorMessage);
+      }
+    },
+  });
+  /*
     Jeg har kigget på powerPoint slides fra lektion 11 omkring
     REST og Javascript og det er hvad jeg kom frem til.
 
@@ -65,41 +86,63 @@ function createUser() {
     Da det er her hvor dataen bliver loadet ind.
      */
 
-	//load data into view displayet to user
-	//$('#createUser').load(data);
+  //load data into view displayet to user
+  //$('#createUser').load(data);
 
-	//show container
-	// $('#user').show();
+  //show container
+  // $('#user').show();
 }
 
 function updateUser() {
-    document.getElementById("loaderID").style.display="block";
-    event.preventDefault();
+  $(".formy").each(function (e, i) {
+    i.style.border = "2px solid black";
+  });
+  $(".error").each(function (e, i) {
+    console.log(e);
+    console.log(i);
+    i.innerHTML = "";
+  });
+  document.getElementById("loaderID").style.display = "block";
+  event.preventDefault();
 
-    const user = {
-        id: $('#u_id').val(),
-        cpr: $('#u_cprID').val(),
-        name: $('#u_name').val(),
-        initials: $('#u_initials').val(),
-        password: $('#u_userPassword').val(),
-        roles: $('#u_role').val()
-    };
+  const user = {
+    id: $("#u_id").val(),
+    cpr: $("#u_cprID").val(),
+    name: $("#u_name").val(),
+    initials: $("#u_initials").val(),
+    password: $("#u_userPassword").val(),
+    roles: $("#u_role").val(),
+  };
 
-    $.ajax({url: `https://api.mama.sh`,
-        method: 'PUT',
-        data: JSON.stringify(user),
-        contentType: "application/json",
-        success: function (response) {
-            document.getElementById("loaderID").style.display="none";
-            $(".updateUser").hide();
-            $(".showResult").html(`<p> User ${user.name} updated </p>`);
-            $(".showResult").show();
-        },
-        error: function (jqXHR, text, error) {
-            document.getElementById("loaderID").style.display="none";
-            alert(jqXHR.status + text + error);
-        }
-    });
+  $.ajax({
+    url: `https://api.mama.sh`,
+    method: "PUT",
+    data: JSON.stringify(user),
+    contentType: "application/json",
+    success: function (response) {
+      document.getElementById("loaderID").style.display = "none";
+      $(".updateUser").hide();
+      $(".showResult").html(`<p> User ${user.name} updated </p>`);
+      $(".showResult").show();
+    },
+    error: function (jqXHR, text, error) {
+      document.getElementById("loaderID").style.display = "none";
+      var resp = data.responseJSON;
+      if (resp.errorCode == 3) {
+        document.getElementById("u_name").style.border = "2px solid red";
+        $("#u_name_msg").html(resp.errorMessage);
+      }
+      if (resp.errorCode == 2) {
+        document.getElementById("u_cprID").style.border = "2px solid red";
+        $("#u_cpr_msg").html(resp.errorMessage);
+      }
+      if (resp.errorCode == 1) {
+        document.getElementById("u_userPassword").style.border =
+          "2px solid red";
+        $("#u_pass_msg").html(resp.errorMessage);
+      }
+    },
+  });
 }
 
 /*$(document).ready(function () {
@@ -109,98 +152,98 @@ function updateUser() {
 });*/
 
 function getUser() {
-	event.preventDefault();
-	document.getElementById("loaderID").style.display = "block";
+  event.preventDefault();
+  document.getElementById("loaderID").style.display = "block";
 
-	const user = {
-		userID: $("#userID").val(),
-	};
+  const user = {
+    userID: $("#userID").val(),
+  };
 
-	$.ajax({
-		url: `https://api.mama.sh/${user.userID}`,
-		method: "GET",
-		datatype: "json",
-		success: function (response) {
-			document.getElementById("loaderID").style.display = "none";
-			$(".getUser").hide();
-			printerUser(response);
-			$(".showResult").show();
-		},
-		error: function (jqXHR, text, error) {
-			document.getElementById("loaderID").style.display = "none";
-			alert(jqXHR.status + text + error);
-		},
-	});
+  $.ajax({
+    url: `https://api.mama.sh/${user.userID}`,
+    method: "GET",
+    datatype: "json",
+    success: function (response) {
+      document.getElementById("loaderID").style.display = "none";
+      $(".getUser").hide();
+      printerUser(response);
+      $(".showResult").show();
+    },
+    error: function (jqXHR, text, error) {
+      document.getElementById("loaderID").style.display = "none";
+      alert(jqXHR.status + text + error);
+    },
+  });
 }
 
 function listUser() {
-	document.getElementById("loaderID").style.display = "block";
-	$.ajax({
-		url: "https://api.mama.sh/",
-		contentType: "application/json",
-		method: "GET",
-		success: function (response) {
-			document.getElementById("loaderID").style.display = "none";
-			$("#showResult").html("");
-			let html =
-				'<table class="tableOfUsers"> <tr><th>Name</th><th>Id</th></tr>';
-			$.each(response, (i, item) => {
-				html += `<tr>`;
-				html += `<td> ${item.name}</td>`;
-				html += `<td> ${item.id}</td>`;
-				html += `</tr>`;
-			});
-			html += "</table>";
-			console.log(html);
-			$("#showResult").append(html);
+  document.getElementById("loaderID").style.display = "block";
+  $.ajax({
+    url: "https://api.mama.sh/",
+    contentType: "application/json",
+    method: "GET",
+    success: function (response) {
+      document.getElementById("loaderID").style.display = "none";
+      $("#showResult").html("");
+      let html =
+        '<table class="tableOfUsers"> <tr><th>Name</th><th>Id</th></tr>';
+      $.each(response, (i, item) => {
+        html += `<tr>`;
+        html += `<td> ${item.name}</td>`;
+        html += `<td> ${item.id}</td>`;
+        html += `</tr>`;
+      });
+      html += "</table>";
+      console.log(html);
+      $("#showResult").append(html);
 
-			$("#showResult").show();
-		},
-		error: function (jqXHR, text, error) {
-			document.getElementById("loaderID").style.display = "none";
-			alert(jqXHR.status + text + error);
-		},
-	});
+      $("#showResult").show();
+    },
+    error: function (jqXHR, text, error) {
+      document.getElementById("loaderID").style.display = "none";
+      alert(jqXHR.status + text + error);
+    },
+  });
 
-	$("#list").show();
+  $("#list").show();
 }
 
 function deleteUser() {
-	event.preventDefault();
-	document.getElementById("loaderID").style.display = "block";
+  event.preventDefault();
+  document.getElementById("loaderID").style.display = "block";
 
-	const user = {
-		dID: $("#deleteID").val(),
-	};
+  const user = {
+    dID: $("#deleteID").val(),
+  };
 
-	$.ajax({
-		url: `https://api.mama.sh/${user.dID}`,
-		method: "DELETE",
-		success: function (response) {
-			document.getElementById("loaderID").style.display = "none";
-			$(".resultContainer").append(response);
-			$(".deleteUser").hide();
-			$(".showResult").html(`<p> User deleted </p>`);
-			$(".showResult").show();
-		},
-		error: function (jqXHR, text, error) {
-			document.getElementById("loaderID").style.display = "none";
-			alert(jqXHR.status + text + error);
-		},
-	});
+  $.ajax({
+    url: `https://api.mama.sh/${user.dID}`,
+    method: "DELETE",
+    success: function (response) {
+      document.getElementById("loaderID").style.display = "none";
+      $(".resultContainer").append(response);
+      $(".deleteUser").hide();
+      $(".showResult").html(`<p> User deleted </p>`);
+      $(".showResult").show();
+    },
+    error: function (jqXHR, text, error) {
+      document.getElementById("loaderID").style.display = "none";
+      alert(jqXHR.status + text + error);
+    },
+  });
 }
 
 function loadDatabase() {}
 
 function printerUser(user) {
-	$(".showResult").html(
-		`
+  $(".showResult").html(
+    `
         CPR nummer: ${user.cpr}<br>
         Fulde Navn: ${user.name}<br>
         Initialer: ${user.initials}<br>
         Roller: ${user.roles}<br>
         `
-	);
+  );
 }
 
 /*
@@ -231,11 +274,11 @@ const test = $('#userForm').submit(function(data) {
  */
 
 const convertArrayToObject = (array, key) => {
-	const initialValue = {};
-	return array.reduce((obj, item) => {
-		return {
-			...obj,
-			[item[key]]: item,
-		};
-	}, initialValue);
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[key]]: item,
+    };
+  }, initialValue);
 };

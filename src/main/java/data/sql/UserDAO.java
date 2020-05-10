@@ -22,7 +22,7 @@ public class UserDAO implements IUserDAO {
 
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getInitials());
-            pstmt.setLong(3, user.getCpr());
+            pstmt.setString(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
             pstmt.executeUpdate();
 
@@ -66,7 +66,7 @@ public class UserDAO implements IUserDAO {
                 user.setId(id);
                 user.setName(rs.getString("user_name"));
                 user.setInitials(rs.getString("user_init"));
-                user.setCpr(rs.getLong("user_cpr"));
+                user.setCpr(rs.getString("user_cpr"));
                 user.setPassword(rs.getString("user_password"));
             //    user.setRoles(stringToGroup(rs.getString("user_groups")));
                 users.add(user);
@@ -104,7 +104,7 @@ public class UserDAO implements IUserDAO {
                  user.setId(ID);
                  user.setName(rs.getString("user_name"));
                  user.setInitials(rs.getString("user_init"));
-                 user.setCpr(rs.getLong("user_cpr"));
+                 user.setCpr(rs.getString("user_cpr"));
                  user.setPassword(rs.getString("user_password"));
                  user.setRoles(get_user_roles(ID, pstmt));
              }
@@ -131,7 +131,7 @@ public class UserDAO implements IUserDAO {
             // set the corresponding param
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getInitials());
-            pstmt.setLong(3, user.getCpr());
+            pstmt.setString(3, user.getCpr());
             pstmt.setString(4, user.getPassword());
             pstmt.setInt(5, user.getId());
             // update
@@ -181,13 +181,13 @@ public class UserDAO implements IUserDAO {
         return true;
     }
     @Override
-    public boolean exists(long cpr) {
+    public boolean exists(String cpr) {
         String sql = "SELECT from user WHERE user_cpr = ?";
         try (
                 Connection conn = connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
-            pstmt.setLong(1, cpr);
+            pstmt.setString(1, cpr);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             return false;
