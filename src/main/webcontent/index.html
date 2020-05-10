@@ -52,10 +52,11 @@
         <div class="optionHeader">
             <p id="optionText">Options</p>
         </div>
+
         <button type="button" class="optionsButton" id="createUser" onclick="prepareWindow('user', 'Lav bruger')">Create user</button>
         <button type="button" class="optionsButton" id="updateUser" onclick="prepareWindow('update', 'Updater bruger')">Update user </button>
         <button type="button" class="optionsButton" id="getUser" onclick="prepareWindow('get', 'Vis bruger')">Get a user</button>
-        <button type="button" class="optionsButton" id="getUserList" onclick="prepareWindow('gUserList', 'Vis liste af brugere')">Get list of users</button>
+        <button type="button" class="optionsButton" id="getUserList" onclick="prepareWindow('gUserList', 'Vis liste af brugere'); listUser()">Get list of users</button>
         <button type="button" class="optionsButton" id="deleteUser" onclick="prepareWindow('delete', 'Slet bruger')">Delete user</button>
     </div>
 </div>
@@ -227,7 +228,9 @@
                     </form>
                 </div>
             </div>
-            <div class="showResult"> </div>
+            <div class="showResult" id="showResult">
+                
+            </div>
         </div>
     </div>
 </div>
