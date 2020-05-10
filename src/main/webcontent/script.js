@@ -121,11 +121,13 @@ function getUser() {
 }
 
 function listUser() {
+	document.getElementById("loaderID").style.display = "block";
 	$.ajax({
 		url: "https://api.mama.sh/",
 		contentType: "application/json",
 		method: "GET",
 		success: function (response) {
+			document.getElementById("loaderID").style.display = "none";
 			$("#showResult").html("");
 			let html =
 				'<table class="tableOfUsers"> <tr><th>Name</th><th>Id</th></tr>';
@@ -142,6 +144,7 @@ function listUser() {
 			$("#showResult").show();
 		},
 		error: function (jqXHR, text, error) {
+			document.getElementById("loaderID").style.display = "none";
 			alert(jqXHR.status + text + error);
 		},
 	});
