@@ -135,6 +135,14 @@
                     <form id="updateForm">
                         <div class="row">
                             <div class="textDisplay">
+                                <label for="u_id" id="u_idID"> ID: </label>
+                            </div>
+                            <div class="inputFormat">
+                                <input type="text" id="u_id" name="id" placeholder="Indtast ID på bruger">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="textDisplay">
                                 <label for="u_cprID" id="u_cpr"> CPR nummer: </label>
                             </div>
                             <div class="inputFormat">
@@ -186,7 +194,7 @@
                         </div>
 
                         <div class="row">
-                            <input type="submit" onclick="createUser(this.form)" value="Submit">
+                            <input type="submit" onclick="updateUser()" value="Submit">
                         </div>
 
                     </form>

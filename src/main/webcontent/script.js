@@ -73,20 +73,34 @@ function createUser() {
 }
 
 function updateUser() {
-	$.ajax({
-		url: "https://api.mama.sh/users",
-		data: $("#form").serializeJSON(),
-		contentType: "application/json",
-		method: "PUT",
-		success: function (data) {
-			$(".resultContainer").append(data);
-		},
-		error: function (jqXHR, text, error) {
-			alert(jqXHR.status + text + error);
-		},
-	});
+    document.getElementById("loaderID").style.display="block";
 
-	$("#updateUser").show();
+    const id = $('#u_idID').val();
+
+    const user = {
+        cpr: $('#u_cpr').val(),
+        name: $('#u_name').val(),
+        initials: $('#c_initials').val(),
+        password: $('#u_userPassword').val(),
+        roles: $('#u_role').val()
+    };
+
+    $.ajax({url: `https://api.mama.sh/${id}`,
+        data: JSON.stringify(user),
+        contentType: "application/json",
+        method: 'PUT',
+        success: function (data) {
+            document.getElementById("loaderID").style.display="none";
+            /*$(".updateUser").hide();
+            $(".showResult").html(`<p> User ${user.name} updated </p>`);
+            $(".showResult").show();*/
+        },
+        error: function (jqXHR, text, error) {
+            document.getElementById("loaderID").style.display="none";
+            alert(jqXHR.status + text + error);
+        }
+    });
+
 }
 
 /*$(document).ready(function () {
